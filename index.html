@@ -74,7 +74,6 @@
         }
         .theme-toggle:hover { transform: scale(1.05); border-color: var(--cyan-neon); }
 
-        /* ---- LOGO ---- */
         .logo-block {
             display: flex; flex-direction: column;
             align-items: center; gap: 6px;
@@ -114,8 +113,7 @@
         }
         .logo-s {
             font-family: 'Orbitron', sans-serif;
-            font-size: 3.8rem; font-weight: 900;
-            color: var(--cyan-neon);
+            font-size: 3.8rem; font-weight: 900; color: var(--cyan-neon);
             text-shadow: 0 0 40px var(--cyan-neon), 0 0 80px rgba(0,229,255,0.3);
             line-height: 1;
         }
@@ -135,7 +133,6 @@
             color: var(--blue-neon); opacity: 0.75;
         }
 
-        /* ---- SEARCH CARD ---- */
         .search-card {
             width: 100%; max-width: 600px;
             background: var(--bg-card); border: 1px solid var(--border);
@@ -171,12 +168,9 @@
             letter-spacing: 0.25em; cursor: pointer;
             transition: all 0.2s; text-transform: uppercase;
         }
-        .visualise-btn:hover {
-            background: var(--blue-neon); color: #000; box-shadow: var(--glow);
-        }
+        .visualise-btn:hover { background: var(--blue-neon); color: #000; box-shadow: var(--glow); }
         .lucky-btn {
-            width: 100%; padding: 12px;
-            background: transparent;
+            width: 100%; padding: 12px; background: transparent;
             border: 1px solid rgba(0,180,255,0.3); border-radius: 6px;
             color: var(--text-dim); font-family: 'Orbitron', sans-serif;
             font-size: 0.7rem; letter-spacing: 0.15em;
@@ -184,7 +178,6 @@
         }
         .lucky-btn:hover { border-color: var(--blue-neon); color: var(--blue-neon); }
 
-        /* ---- RESULT AREA ---- */
         .result-area {
             width: 100%; max-width: 700px;
             display: none; flex-direction: column; gap: 14px;
@@ -198,10 +191,8 @@
             transition: transform 0.65s cubic-bezier(0.45,0.05,0.55,0.95);
         }
         .flip-card.flipped { transform: rotateY(180deg); }
-
         .flip-front, .flip-back {
-            position: absolute; inset: 0;
-            backface-visibility: hidden;
+            position: absolute; inset: 0; backface-visibility: hidden;
             border-radius: 12px; overflow: hidden;
             border: 1px solid var(--border); background: var(--bg-card2);
         }
@@ -210,9 +201,7 @@
             padding: 28px; overflow-y: auto;
         }
         .flip-back::-webkit-scrollbar { width: 4px; }
-        .flip-back::-webkit-scrollbar-thumb {
-            background: var(--border-bright); border-radius: 4px;
-        }
+        .flip-back::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 4px; }
 
         .visual {
             width: 100%; height: 100%; background: #080e1a;
@@ -221,50 +210,37 @@
         }
         .visual canvas { width: 100% !important; height: 100% !important; }
 
-        /* model label badges */
         .model-label {
             position: absolute; top: 14px; left: 14px;
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.6rem; letter-spacing: 0.2em;
-            color: var(--cyan-neon);
-            background: rgba(0,10,25,0.75);
-            border: 1px solid var(--border-bright);
-            padding: 4px 10px; border-radius: 20px;
-            backdrop-filter: blur(4px);
+            font-size: 0.6rem; letter-spacing: 0.2em; color: var(--cyan-neon);
+            background: rgba(0,10,25,0.75); border: 1px solid var(--border-bright);
+            padding: 4px 10px; border-radius: 20px; backdrop-filter: blur(4px);
         }
-
         .viewer-controls {
             position: absolute; bottom: 12px; right: 12px;
             display: flex; gap: 8px; z-index: 10;
         }
         .layer-btn {
-            background: rgba(10,14,23,0.9);
-            border: 1px solid var(--cyan-neon);
+            background: rgba(10,14,23,0.9); border: 1px solid var(--cyan-neon);
             border-radius: 6px; color: var(--cyan-neon);
             padding: 5px 12px; font-size: 11px;
-            cursor: pointer; font-family: 'Exo 2', sans-serif;
-            transition: all 0.2s;
+            cursor: pointer; font-family: 'Exo 2', sans-serif; transition: all 0.2s;
         }
         .layer-btn:hover { background: rgba(0,229,255,0.15); }
 
         .loading-state {
-            display: flex; flex-direction: column;
-            align-items: center; gap: 16px;
-            color: var(--text-dim); font-size: 0.8rem;
-            font-family: 'Orbitron', sans-serif;
+            display: flex; flex-direction: column; align-items: center; gap: 16px;
+            color: var(--text-dim); font-size: 0.8rem; font-family: 'Orbitron', sans-serif;
         }
         .spinner {
-            width: 38px; height: 38px;
-            border: 2px solid var(--border);
-            border-top-color: var(--blue-neon);
-            border-radius: 50%;
+            width: 38px; height: 38px; border: 2px solid var(--border);
+            border-top-color: var(--blue-neon); border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        .ai-answer-text {
-            line-height: 1.85; font-size: 0.95rem; color: var(--text-main);
-        }
+        .ai-answer-text { line-height: 1.85; font-size: 0.95rem; color: var(--text-main); }
         .ai-answer-text p { margin-bottom: 14px; }
 
         .flip-label {
@@ -274,19 +250,13 @@
             pointer-events: none; z-index: 2;
         }
         .flip-toggle {
-            width: 100%; padding: 12px;
-            background: transparent;
+            width: 100%; padding: 12px; background: transparent;
             border: 1px solid rgba(0,180,255,0.3); border-radius: 6px;
             color: var(--text-dim); font-family: 'Orbitron', sans-serif;
-            font-size: 0.68rem; letter-spacing: 0.15em;
-            cursor: pointer; transition: all 0.2s;
+            font-size: 0.68rem; letter-spacing: 0.15em; cursor: pointer; transition: all 0.2s;
         }
-        .flip-toggle:hover {
-            border-color: var(--blue-neon); color: var(--blue-neon);
-            background: rgba(0,180,255,0.07);
-        }
+        .flip-toggle:hover { border-color: var(--blue-neon); color: var(--blue-neon); background: rgba(0,180,255,0.07); }
 
-        /* ---- PRO BANNER ---- */
         .pro-banner {
             width: 100%; max-width: 600px;
             background: linear-gradient(135deg, rgba(255,215,0,0.06), rgba(0,180,255,0.06));
@@ -295,25 +265,16 @@
             gap: 12px; position: relative; overflow: hidden;
         }
         .pro-banner::before {
-            content: 'COMING SOON'; position: absolute;
-            top: 12px; right: 18px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.55rem; letter-spacing: 0.2em;
-            color: var(--gold); opacity: 0.8;
+            content: 'COMING SOON'; position: absolute; top: 12px; right: 18px;
+            font-family: 'Orbitron', sans-serif; font-size: 0.55rem;
+            letter-spacing: 0.2em; color: var(--gold); opacity: 0.8;
         }
         .pro-banner-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem; font-weight: 800;
-            color: var(--gold); text-shadow: var(--gold-glow);
+            font-family: 'Orbitron', sans-serif; font-size: 1.2rem;
+            font-weight: 800; color: var(--gold); text-shadow: var(--gold-glow);
         }
-        .pro-features {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 10px; margin-top: 8px;
-        }
-        .pro-feature {
-            display: flex; align-items: center; gap: 10px;
-            font-size: 0.85rem; color: var(--text-main); opacity: 0.9;
-        }
+        .pro-features { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+        .pro-feature { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; color: var(--text-main); opacity: 0.9; }
         .pro-feature-icon { color: var(--gold); font-size: 1rem; }
         .pro-notify-btn {
             width: 100%; padding: 12px; background: transparent;
@@ -322,15 +283,12 @@
             font-size: 0.7rem; letter-spacing: 0.15em;
             cursor: pointer; margin-top: 8px; transition: all 0.2s;
         }
-        .pro-notify-btn:hover {
-            background: rgba(255,215,0,0.1); box-shadow: var(--gold-glow);
-        }
+        .pro-notify-btn:hover { background: rgba(255,215,0,0.1); box-shadow: var(--gold-glow); }
 
         .demo-unlock {
             width: 100%; max-width: 600px; margin-top: 8px; padding: 10px;
-            background: transparent;
-            border: 1px dashed rgba(0,180,255,0.3); border-radius: 6px;
-            color: var(--text-dim); font-family: 'Exo 2', sans-serif;
+            background: transparent; border: 1px dashed rgba(0,180,255,0.3);
+            border-radius: 6px; color: var(--text-dim); font-family: 'Exo 2', sans-serif;
             font-size: 0.7rem; cursor: pointer; transition: all 0.2s;
         }
         .demo-unlock:hover { border-color: var(--cyan-neon); color: var(--cyan-neon); }
@@ -342,7 +300,6 @@
         }
         .footer span { color: var(--blue-neon); }
 
-        /* ---- MODAL ---- */
         .modal-overlay {
             display: none; position: fixed; inset: 0;
             background: rgba(0,0,0,0.8); z-index: 1000;
@@ -352,44 +309,32 @@
         .modal {
             background: var(--bg-card); border: 1px solid var(--gold);
             border-radius: 14px; padding: 32px;
-            max-width: 360px; width: 90%;
-            text-align: center; position: relative;
+            max-width: 360px; width: 90%; text-align: center; position: relative;
         }
         .modal-close {
             position: absolute; top: 12px; right: 16px;
-            background: none; border: none;
-            color: var(--text-dim); font-size: 1.2rem; cursor: pointer;
+            background: none; border: none; color: var(--text-dim); font-size: 1.2rem; cursor: pointer;
         }
-        .modal-icon  { font-size: 2rem; margin-bottom: 10px; }
+        .modal-icon { font-size: 2rem; margin-bottom: 10px; }
         .modal-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem; letter-spacing: 0.15em;
-            color: var(--gold); margin-bottom: 16px;
+            font-family: 'Orbitron', sans-serif; font-size: 0.9rem;
+            letter-spacing: 0.15em; color: var(--gold); margin-bottom: 16px;
         }
-        .notify-form {
-            display: flex; flex-direction: column; gap: 12px; margin-top: 14px;
-        }
+        .notify-form { display: flex; flex-direction: column; gap: 12px; margin-top: 14px; }
         .notify-input {
-            width: 100%; padding: 12px;
-            background: rgba(0,10,25,0.8);
-            border: 1px solid var(--border); border-radius: 6px;
-            color: white; outline: none;
+            width: 100%; padding: 12px; background: rgba(0,10,25,0.8);
+            border: 1px solid var(--border); border-radius: 6px; color: white; outline: none;
         }
         .notify-submit {
-            width: 100%; padding: 12px;
-            background: rgba(255,215,0,0.1);
+            width: 100%; padding: 12px; background: rgba(255,215,0,0.1);
             border: 1px solid rgba(255,215,0,0.4); border-radius: 6px;
             color: var(--gold); font-family: 'Orbitron', sans-serif; cursor: pointer;
         }
-        .notify-success {
-            color: #00ffaa; display: none; margin-top: 8px; font-size: 0.8rem;
-        }
+        .notify-success { color: #00ffaa; display: none; margin-top: 8px; font-size: 0.8rem; }
 
-        /* no-visual message */
         .no-visual-msg {
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            height: 100%; color: #5a7a95;
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; height: 100%; color: #5a7a95;
             font-size: 14px; text-align: center; padding: 20px; gap: 12px;
         }
         .no-visual-msg span { color: #00e5ff; }
@@ -414,7 +359,6 @@
 <div class="theme-toggle" id="themeToggle">🌞</div>
 
 <div class="page">
-
     <div class="logo-block">
         <div class="logo-globe">
             <div class="globe-sphere">
@@ -484,7 +428,6 @@
     </div>
 </div>
 
-<!-- Notify Modal -->
 <div class="modal-overlay" id="notifyModal">
     <div class="modal">
         <button class="modal-close" id="notifyClose">✕</button>
@@ -508,924 +451,306 @@
 // WIRE BACKGROUND
 // ================================================================
 (function(){
-    const canvas = document.getElementById('wireCanvas');
-    const ctx    = canvas.getContext('2d');
-    let nodes = [], pulses = [];
-    function resize(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    resize();
-    window.addEventListener('resize', resize);
-    for(let i=0;i<40;i++) nodes.push({
-        x:Math.random()*window.innerWidth, y:Math.random()*window.innerHeight,
-        vx:(Math.random()-0.5)*0.3, vy:(Math.random()-0.5)*0.3
-    });
-    setInterval(()=>{
-        const a=Math.floor(Math.random()*nodes.length);
-        const b=Math.floor(Math.random()*nodes.length);
-        if(a!==b) pulses.push({from:a,to:b,progress:0,speed:0.008+Math.random()*0.012});
-    },300);
+    const canvas=document.getElementById('wireCanvas'),ctx=canvas.getContext('2d');
+    let nodes=[],pulses=[];
+    function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+    resize(); window.addEventListener('resize',resize);
+    for(let i=0;i<40;i++) nodes.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3});
+    setInterval(()=>{const a=Math.floor(Math.random()*nodes.length),b=Math.floor(Math.random()*nodes.length);if(a!==b)pulses.push({from:a,to:b,progress:0,speed:0.008+Math.random()*0.012});},300);
     function draw(){
         ctx.clearRect(0,0,canvas.width,canvas.height);
-        nodes.forEach(n=>{ n.x+=n.vx; n.y+=n.vy;
-            if(n.x<0||n.x>canvas.width) n.vx*=-1;
-            if(n.y<0||n.y>canvas.height) n.vy*=-1;
-        });
-        for(let i=0;i<nodes.length;i++) for(let j=i+1;j<nodes.length;j++){
-            const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y;
-            if(Math.sqrt(dx*dx+dy*dy)<200){
-                ctx.beginPath(); ctx.strokeStyle='rgba(0,180,255,0.2)';
-                ctx.lineWidth=1.5; ctx.moveTo(nodes[i].x,nodes[i].y);
-                ctx.lineTo(nodes[j].x,nodes[j].y); ctx.stroke();
-            }
-        }
-        nodes.forEach(n=>{ ctx.beginPath(); ctx.arc(n.x,n.y,2,0,Math.PI*2);
-            ctx.fillStyle='rgba(0,229,255,0.4)'; ctx.fill(); });
-        pulses=pulses.filter(p=>{
-            p.progress+=p.speed; if(p.progress>1) return false;
-            const px=nodes[p.from].x+(nodes[p.to].x-nodes[p.from].x)*p.progress;
-            const py=nodes[p.from].y+(nodes[p.to].y-nodes[p.from].y)*p.progress;
-            ctx.beginPath(); ctx.arc(px,py,4,0,Math.PI*2);
-            ctx.fillStyle='#00e5ff'; ctx.fill(); return true;
-        });
+        nodes.forEach(n=>{n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>canvas.width)n.vx*=-1;if(n.y<0||n.y>canvas.height)n.vy*=-1;});
+        for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y;if(Math.sqrt(dx*dx+dy*dy)<200){ctx.beginPath();ctx.strokeStyle='rgba(0,180,255,0.2)';ctx.lineWidth=1.5;ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);ctx.stroke();}}
+        nodes.forEach(n=>{ctx.beginPath();ctx.arc(n.x,n.y,2,0,Math.PI*2);ctx.fillStyle='rgba(0,229,255,0.4)';ctx.fill();});
+        pulses=pulses.filter(p=>{p.progress+=p.speed;if(p.progress>1)return false;const px=nodes[p.from].x+(nodes[p.to].x-nodes[p.from].x)*p.progress,py=nodes[p.from].y+(nodes[p.to].y-nodes[p.from].y)*p.progress;ctx.beginPath();ctx.arc(px,py,4,0,Math.PI*2);ctx.fillStyle='#00e5ff';ctx.fill();return true;});
         requestAnimationFrame(draw);
     }
     draw();
 })();
 
 // ================================================================
-// THEME TOGGLE
+// THEME
 // ================================================================
 document.getElementById('themeToggle').addEventListener('click',()=>{
-    const isLight = document.documentElement.getAttribute('data-theme')==='light';
-    if(isLight){ document.documentElement.removeAttribute('data-theme'); document.getElementById('themeToggle').textContent='🌞'; }
-    else { document.documentElement.setAttribute('data-theme','light'); document.getElementById('themeToggle').textContent='🌙'; }
+    const isLight=document.documentElement.getAttribute('data-theme')==='light';
+    if(isLight){document.documentElement.removeAttribute('data-theme');document.getElementById('themeToggle').textContent='🌞';}
+    else{document.documentElement.setAttribute('data-theme','light');document.getElementById('themeToggle').textContent='🌙';}
 });
 
 // ================================================================
 // PRO DEMO
 // ================================================================
-let isPro = false;
-document.getElementById('demoUnlockBtn').addEventListener('click',()=>{
-    isPro=true; alert('⭐ Pro features unlocked for this session (demo mode). Refresh to reset.');
-});
+let isPro=false;
+document.getElementById('demoUnlockBtn').addEventListener('click',()=>{isPro=true;alert('⭐ Pro features unlocked for this session.');});
 
 // ================================================================
-// THREE.JS 3D MODELS — all built in code, zero external assets
+// THREE.JS ENGINE
 // ================================================================
-let threeRenderer=null, threeScene=null, threeCamera=null, threeAnim=null;
-
-function destroyThree(){
-    if(threeAnim){ cancelAnimationFrame(threeAnim); threeAnim=null; }
-    if(threeRenderer){ threeRenderer.dispose(); threeRenderer=null; }
-    threeScene=null; threeCamera=null;
-}
-
+let threeRenderer=null,threeScene=null,threeCamera=null,threeAnim=null;
+function destroyThree(){if(threeAnim){cancelAnimationFrame(threeAnim);threeAnim=null;}if(threeRenderer){threeRenderer.dispose();threeRenderer=null;}threeScene=null;threeCamera=null;}
 function initThree(container){
     destroyThree();
-    const w=container.clientWidth||600, h=container.clientHeight||480;
-    threeRenderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
-    threeRenderer.setSize(w,h);
-    threeRenderer.setPixelRatio(window.devicePixelRatio);
-    threeRenderer.setClearColor(0x080e1a,1);
+    const w=container.clientWidth||600,h=container.clientHeight||480;
+    threeRenderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+    threeRenderer.setSize(w,h);threeRenderer.setPixelRatio(window.devicePixelRatio);threeRenderer.setClearColor(0x080e1a,1);
     container.appendChild(threeRenderer.domElement);
-
-    threeScene  = new THREE.Scene();
-    threeCamera = new THREE.PerspectiveCamera(60, w/h, 0.1, 1000);
-    threeCamera.position.set(0,0,4);
-
-    // Ambient + directional light
-    threeScene.add(new THREE.AmbientLight(0x224466, 1.2));
-    const dir = new THREE.DirectionalLight(0x00e5ff, 2);
-    dir.position.set(5,5,5); threeScene.add(dir);
-    const dir2 = new THREE.DirectionalLight(0xff4488, 1);
-    dir2.position.set(-5,-3,2); threeScene.add(dir2);
-
-    // Mouse drag to rotate
-    let isDragging=false, prevMouse={x:0,y:0};
+    threeScene=new THREE.Scene();threeCamera=new THREE.PerspectiveCamera(60,w/h,0.1,1000);threeCamera.position.set(0,0,4);
+    threeScene.add(new THREE.AmbientLight(0x224466,1.2));
+    const d1=new THREE.DirectionalLight(0x00e5ff,2);d1.position.set(5,5,5);threeScene.add(d1);
+    const d2=new THREE.DirectionalLight(0xff4488,1);d2.position.set(-5,-3,2);threeScene.add(d2);
+    let isDragging=false,prevMouse={x:0,y:0};
     threeRenderer.domElement.addEventListener('mousedown',e=>{isDragging=true;prevMouse={x:e.clientX,y:e.clientY};});
     window.addEventListener('mouseup',()=>isDragging=false);
-    window.addEventListener('mousemove',e=>{
-        if(!isDragging||!threeScene.userData.pivot) return;
-        const dx=(e.clientX-prevMouse.x)*0.01;
-        const dy=(e.clientY-prevMouse.y)*0.01;
-        threeScene.userData.pivot.rotation.y+=dx;
-        threeScene.userData.pivot.rotation.x+=dy;
-        prevMouse={x:e.clientX,y:e.clientY};
-    });
-    // Touch drag
+    window.addEventListener('mousemove',e=>{if(!isDragging||!threeScene.userData.pivot)return;threeScene.userData.pivot.rotation.y+=(e.clientX-prevMouse.x)*0.01;threeScene.userData.pivot.rotation.x+=(e.clientY-prevMouse.y)*0.01;prevMouse={x:e.clientX,y:e.clientY};});
     threeRenderer.domElement.addEventListener('touchstart',e=>{isDragging=true;prevMouse={x:e.touches[0].clientX,y:e.touches[0].clientY};});
     threeRenderer.domElement.addEventListener('touchend',()=>isDragging=false);
-    threeRenderer.domElement.addEventListener('touchmove',e=>{
-        if(!isDragging||!threeScene.userData.pivot) return;
-        const dx=(e.touches[0].clientX-prevMouse.x)*0.01;
-        const dy=(e.touches[0].clientY-prevMouse.y)*0.01;
-        threeScene.userData.pivot.rotation.y+=dx;
-        threeScene.userData.pivot.rotation.x+=dy;
-        prevMouse={x:e.touches[0].clientX,y:e.touches[0].clientY};
-        e.preventDefault();
-    },{passive:false});
+    threeRenderer.domElement.addEventListener('touchmove',e=>{if(!isDragging||!threeScene.userData.pivot)return;threeScene.userData.pivot.rotation.y+=(e.touches[0].clientX-prevMouse.x)*0.01;threeScene.userData.pivot.rotation.x+=(e.touches[0].clientY-prevMouse.y)*0.01;prevMouse={x:e.touches[0].clientX,y:e.touches[0].clientY};e.preventDefault();},{passive:false});
+}
+function startLoop(onFrame){function loop(){threeAnim=requestAnimationFrame(loop);onFrame();threeRenderer.render(threeScene,threeCamera);}loop();}
+function makeParticles(count,spread,color){const g=new THREE.BufferGeometry(),p=new Float32Array(count*3);for(let i=0;i<count;i++){p[i*3]=(Math.random()-0.5)*spread;p[i*3+1]=(Math.random()-0.5)*spread;p[i*3+2]=(Math.random()-0.5)*spread;}g.setAttribute('position',new THREE.BufferAttribute(p,3));return new THREE.Points(g,new THREE.PointsMaterial({color,size:0.05,transparent:true,opacity:0.6}));}
 
-    return {scene:threeScene, camera:threeCamera, renderer:threeRenderer};
+// ================================================================
+// 3D MODELS
+// ================================================================
+function buildHeart(c){
+    initThree(c);const piv=new THREE.Group();threeScene.userData.pivot=piv;threeScene.add(piv);
+    const m=new THREE.MeshPhongMaterial({color:0xcc2244,emissive:0x550011,shininess:80,transparent:true,opacity:0.92});
+    const wm=new THREE.MeshBasicMaterial({color:0xff4466,wireframe:true,transparent:true,opacity:0.15});
+    const lg=new THREE.SphereGeometry(0.7,32,32);
+    [[-0.45,0.35,0],[0.45,0.35,0]].forEach(([x,y,z])=>{piv.add(Object.assign(new THREE.Mesh(lg,m),{position:new THREE.Vector3(x,y,z)}));piv.add(Object.assign(new THREE.Mesh(lg,wm),{position:new THREE.Vector3(x,y,z)}));});
+    const cg=new THREE.ConeGeometry(0.85,1.6,32);const cone=new THREE.Mesh(cg,m);cone.position.set(0,-0.4,0);cone.rotation.z=Math.PI;piv.add(cone);piv.add(Object.assign(new THREE.Mesh(cg,wm),{position:cone.position,rotation:cone.rotation}));
+    piv.add(Object.assign(new THREE.Mesh(new THREE.SphereGeometry(0.65,32,32),m),{position:new THREE.Vector3(0,0.1,0)}));
+    const tm=new THREE.MeshPhongMaterial({color:0xff2255,emissive:0x330011});
+    [[-0.3,1.05,0,0,0,0.3,0.6],[0.3,1.05,0,0,0,-0.3,0.6],[0,1.3,0,0,0,0,0.5]].forEach(([x,y,z,rx,ry,rz,h])=>{const t=new THREE.Mesh(new THREE.CylinderGeometry(0.12,0.12,h,16),tm);t.position.set(x,y,z);t.rotation.set(rx,ry,rz);piv.add(t);});
+    const gm=new THREE.MeshBasicMaterial({color:0xff2244,transparent:true,opacity:0.08,side:THREE.BackSide});const glow=new THREE.Mesh(new THREE.SphereGeometry(1.05,32,32),gm);piv.add(glow);
+    const pts=makeParticles(120,4,0xff4466);threeScene.add(pts);
+    let t=0;startLoop(()=>{t+=0.03;piv.rotation.y+=0.005;const b=1+0.08*Math.abs(Math.sin(t*2));piv.scale.set(b,b,b);gm.opacity=0.05+0.06*Math.abs(Math.sin(t*2));pts.rotation.y+=0.002;});
 }
 
-function startLoop(onFrame){
-    function loop(){ threeAnim=requestAnimationFrame(loop); onFrame(); threeRenderer.render(threeScene,threeCamera); }
-    loop();
+function buildBrain(c){
+    initThree(c);const piv=new THREE.Group();threeScene.userData.pivot=piv;threeScene.add(piv);
+    const bm=new THREE.MeshPhongMaterial({color:0xffaacc,emissive:0x441122,shininess:40});
+    const hg=new THREE.SphereGeometry(1,32,32,0,Math.PI);
+    const hl=new THREE.Mesh(hg,bm);hl.rotation.y=Math.PI;piv.add(hl);piv.add(new THREE.Mesh(hg,bm));
+    const bumpMat=new THREE.MeshPhongMaterial({color:0xff99bb,emissive:0x330011,shininess:30});
+    [[-0.6,0.7,0.5],[0.6,0.7,0.5],[0,0.9,0.2],[-0.4,0.5,0.8],[0.4,0.5,0.8],[-0.8,0.2,0.3],[0.8,0.2,0.3],[-0.3,-0.1,0.9],[0.3,-0.1,0.9],[0,0.2,1.0],[-0.7,0.4,-0.4],[0.7,0.4,-0.4],[-0.5,-0.3,0.5],[0.5,-0.3,0.5],[0,-0.2,0.6]].forEach(([x,y,z])=>{const b=new THREE.Mesh(new THREE.SphereGeometry(0.22+Math.random()*0.15,16,16),bumpMat);b.position.set(x,y,z);piv.add(b);});
+    const st=new THREE.Mesh(new THREE.CylinderGeometry(0.18,0.22,0.7,16),new THREE.MeshPhongMaterial({color:0xee88aa,emissive:0x220011}));st.position.set(0,-0.95,0);piv.add(st);
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(1.2,32,32),new THREE.MeshBasicMaterial({color:0xff88cc,transparent:true,opacity:0.06,side:THREE.BackSide})));
+    const pts=makeParticles(180,4,0xffbbdd);threeScene.add(pts);
+    startLoop(()=>{piv.rotation.y+=0.004;piv.rotation.x=Math.sin(Date.now()*0.0005)*0.1;pts.rotation.y+=0.001;});
 }
 
-// ---- HEART ----
-function buildHeart(container){
-    initThree(container);
-    const pivot = new THREE.Group(); threeScene.userData.pivot = pivot; threeScene.add(pivot);
-
-    // Heart shape using LatheGeometry approximation + two spheres + cone
-    const heartMat = new THREE.MeshPhongMaterial({color:0xcc2244,emissive:0x550011,shininess:80,transparent:true,opacity:0.92});
-    const wireMat  = new THREE.MeshBasicMaterial({color:0xff4466,wireframe:true,transparent:true,opacity:0.15});
-
-    // Two upper lobes
-    const lobeGeo = new THREE.SphereGeometry(0.7,32,32);
-    const lobe1   = new THREE.Mesh(lobeGeo, heartMat); lobe1.position.set(-0.45,0.35,0); pivot.add(lobe1);
-    const lobe2   = new THREE.Mesh(lobeGeo, heartMat); lobe2.position.set(0.45,0.35,0);  pivot.add(lobe2);
-    const wire1   = new THREE.Mesh(lobeGeo, wireMat);  wire1.position.copy(lobe1.position); pivot.add(wire1);
-    const wire2   = new THREE.Mesh(lobeGeo, wireMat);  wire2.position.copy(lobe2.position); pivot.add(wire2);
-
-    // Bottom cone
-    const coneGeo = new THREE.ConeGeometry(0.85,1.6,32);
-    const cone    = new THREE.Mesh(coneGeo, heartMat); cone.position.set(0,-0.4,0); cone.rotation.z=Math.PI; pivot.add(cone);
-    const wireC   = new THREE.Mesh(coneGeo, wireMat);  wireC.position.copy(cone.position); wireC.rotation.copy(cone.rotation); pivot.add(wireC);
-
-    // Centre fill
-    const fillGeo = new THREE.SphereGeometry(0.65,32,32);
-    const fill    = new THREE.Mesh(fillGeo, heartMat); fill.position.set(0,0.1,0); pivot.add(fill);
-
-    // Aorta tubes
-    const tubeMat = new THREE.MeshPhongMaterial({color:0xff2255,emissive:0x330011});
-    function addTube(x,y,z,rx,ry,rz,h){
-        const g = new THREE.CylinderGeometry(0.12,0.12,h,16);
-        const m = new THREE.Mesh(g,tubeMat); m.position.set(x,y,z);
-        m.rotation.set(rx,ry,rz); pivot.add(m);
+function buildLungs(c){
+    initThree(c);const piv=new THREE.Group();threeScene.userData.pivot=piv;threeScene.add(piv);
+    const lm=new THREE.MeshPhongMaterial({color:0xff7733,emissive:0x441100,shininess:50,transparent:true,opacity:0.9});
+    const tm=new THREE.MeshPhongMaterial({color:0xffaa55,emissive:0x331100});
+    function mkLung(side){const g=new THREE.Group();
+        [[0.7,1.2,0.7,side*0.72,0,0],[0.45,1,0.8,side*0.68,0.75,0],[0.5,0.85,0.85,side*0.7,-0.72,0]].forEach(([rx,ry,rz,x,y,z],i)=>{const sg=new THREE.SphereGeometry(i===0?0.7:i===1?0.45:0.5,32,32);sg.scale(rx,ry,rz);const m=new THREE.Mesh(sg,lm);m.position.set(x,y,z);g.add(m);});
+        for(let i=0;i<4;i++){const b=new THREE.Mesh(new THREE.CylinderGeometry(0.04,0.04,0.45,8),tm);b.position.set(side*0.5,0.3-i*0.25,0.1);b.rotation.z=side*(0.4+i*0.15);b.rotation.x=0.2;g.add(b);}
+        piv.add(g);
     }
-    addTube(-0.3,1.05,0,0,0,0.3,0.6);
-    addTube(0.3,1.05,0,0,0,-0.3,0.6);
-    addTube(0,1.3,0,0,0,0,0.5);
-
-    // Pulse glow sphere
-    const glowGeo = new THREE.SphereGeometry(1.05,32,32);
-    const glowMat = new THREE.MeshBasicMaterial({color:0xff2244,transparent:true,opacity:0.08,side:THREE.BackSide});
-    const glow    = new THREE.Mesh(glowGeo,glowMat); pivot.add(glow);
-
-    // Floating particles (blood cells)
-    const pGeo = new THREE.BufferGeometry();
-    const pCount=120, pPos=new Float32Array(pCount*3);
-    for(let i=0;i<pCount;i++){ pPos[i*3]=( Math.random()-0.5)*4; pPos[i*3+1]=(Math.random()-0.5)*4; pPos[i*3+2]=(Math.random()-0.5)*4; }
-    pGeo.setAttribute('position', new THREE.BufferAttribute(pPos,3));
-    const pMat = new THREE.PointsMaterial({color:0xff4466,size:0.06,transparent:true,opacity:0.7});
-    const particles = new THREE.Points(pGeo,pMat); threeScene.add(particles);
-
-    let t=0;
-    startLoop(()=>{
-        t+=0.03;
-        pivot.rotation.y+=0.005;
-        // Heartbeat pulse
-        const beat = 1 + 0.08*Math.abs(Math.sin(t*2));
-        pivot.scale.set(beat,beat,beat);
-        glowMat.opacity = 0.05+0.06*Math.abs(Math.sin(t*2));
-        particles.rotation.y+=0.002;
-    });
+    mkLung(-1);mkLung(1);
+    const tr=new THREE.Mesh(new THREE.CylinderGeometry(0.12,0.12,1.2,16),tm);tr.position.set(0,0.9,0);piv.add(tr);
+    for(let i=0;i<6;i++){const r=new THREE.Mesh(new THREE.TorusGeometry(0.13,0.025,8,16),new THREE.MeshPhongMaterial({color:0xffcc88}));r.position.set(0,0.4+i*0.18,0);r.rotation.x=Math.PI/2;piv.add(r);}
+    const gm=new THREE.MeshBasicMaterial({color:0xff8844,transparent:true,opacity:0.05,side:THREE.BackSide});const glow=new THREE.Mesh(new THREE.SphereGeometry(1.4,32,32),gm);threeScene.add(glow);
+    const pts=makeParticles(150,4,0x88ddff);threeScene.add(pts);
+    let t=0;startLoop(()=>{t+=0.02;piv.rotation.y+=0.004;const b=1+0.07*Math.sin(t*0.8);piv.scale.set(b,b*0.95,b);gm.opacity=0.03+0.04*Math.sin(t*0.8);pts.rotation.y+=0.002;});
 }
 
-// ---- BRAIN ----
-function buildBrain(container){
-    initThree(container);
-    const pivot = new THREE.Group(); threeScene.userData.pivot = pivot; threeScene.add(pivot);
-
-    const brainMat  = new THREE.MeshPhongMaterial({color:0xffaacc,emissive:0x441122,shininess:40});
-    const wrinkleMat= new THREE.MeshPhongMaterial({color:0xff88aa,emissive:0x330011,wireframe:false,shininess:20});
-
-    // Main brain hemisphere — left
-    const hGeo  = new THREE.SphereGeometry(1,32,32,0,Math.PI);
-    const hLeft = new THREE.Mesh(hGeo, brainMat); hLeft.rotation.y=Math.PI; pivot.add(hLeft);
-    // Right hemisphere
-    const hRight= new THREE.Mesh(hGeo, brainMat); pivot.add(hRight);
-
-    // Wrinkle bumps (convolutions)
-    const bumpMat = new THREE.MeshPhongMaterial({color:0xff99bb,emissive:0x330011,shininess:30});
-    const bumpPositions=[
-        [-0.6,0.7,0.5],[0.6,0.7,0.5],[0,0.9,0.2],[-0.4,0.5,0.8],[0.4,0.5,0.8],
-        [-0.8,0.2,0.3],[0.8,0.2,0.3],[-0.3,-0.1,0.9],[0.3,-0.1,0.9],[0,0.2,1.0],
-        [-0.7,0.4,-0.4],[0.7,0.4,-0.4],[-0.5,-0.3,0.5],[0.5,-0.3,0.5],[0,-0.2,0.6],
-    ];
-    bumpPositions.forEach(([x,y,z])=>{
-        const r = 0.22+Math.random()*0.15;
-        const g = new THREE.SphereGeometry(r,16,16);
-        const m = new THREE.Mesh(g, bumpMat); m.position.set(x,y,z); pivot.add(m);
-    });
-
-    // Brain stem
-    const stemGeo = new THREE.CylinderGeometry(0.18,0.22,0.7,16);
-    const stemMat = new THREE.MeshPhongMaterial({color:0xee88aa,emissive:0x220011});
-    const stem    = new THREE.Mesh(stemGeo,stemMat); stem.position.set(0,-0.95,0); pivot.add(stem);
-
-    // Neural glow
-    const glowGeo = new THREE.SphereGeometry(1.2,32,32);
-    const glowMat = new THREE.MeshBasicMaterial({color:0xff88cc,transparent:true,opacity:0.06,side:THREE.BackSide});
-    pivot.add(new THREE.Mesh(glowGeo,glowMat));
-
-    // Synapse particles
-    const pGeo=new THREE.BufferGeometry();
-    const pCount=180, pPos=new Float32Array(pCount*3);
-    for(let i=0;i<pCount;i++){ pPos[i*3]=(Math.random()-0.5)*4; pPos[i*3+1]=(Math.random()-0.5)*4; pPos[i*3+2]=(Math.random()-0.5)*4; }
-    pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
-    const particles=new THREE.Points(pGeo,new THREE.PointsMaterial({color:0xffbbdd,size:0.05,transparent:true,opacity:0.6}));
-    threeScene.add(particles);
-
-    startLoop(()=>{
-        pivot.rotation.y+=0.004;
-        pivot.rotation.x=Math.sin(Date.now()*0.0005)*0.1;
-        particles.rotation.y+=0.001;
-    });
+function buildKidney(c){
+    initThree(c);const piv=new THREE.Group();threeScene.userData.pivot=piv;threeScene.add(piv);
+    const mat=new THREE.MeshPhongMaterial({color:0xcc4422,emissive:0x440f00,shininess:60});
+    const imat=new THREE.MeshPhongMaterial({color:0xff8855,emissive:0x330800,shininess:40,transparent:true,opacity:0.85});
+    const tmat=new THREE.MeshPhongMaterial({color:0xffaa66,emissive:0x221100});
+    function mkK(side){const g=new THREE.Group();
+        const og=new THREE.SphereGeometry(0.65,32,32);og.scale(0.75,1,0.55);const o=new THREE.Mesh(og,mat);o.position.set(side*0.85,0,0);if(side===1)o.scale.x=-1;g.add(o);
+        const ig=new THREE.SphereGeometry(0.38,24,24);ig.scale(0.7,0.9,0.5);const inn=new THREE.Mesh(ig,imat);inn.position.set(side*0.85,0,0.05);if(side===1)inn.scale.x=-1;g.add(inn);
+        const u=new THREE.Mesh(new THREE.CylinderGeometry(0.05,0.05,0.8,8),tmat);u.position.set(side*0.5,-0.75,0);u.rotation.z=side*0.3;g.add(u);
+        piv.add(g);
+    }
+    mkK(-1);mkK(1);
+    const art=new THREE.Mesh(new THREE.CylinderGeometry(0.06,0.06,1.0,8),new THREE.MeshPhongMaterial({color:0xff3333,emissive:0x220000}));art.position.set(0,0.2,0);art.rotation.z=Math.PI/2;piv.add(art);
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(1.5,32,32),new THREE.MeshBasicMaterial({color:0xff6633,transparent:true,opacity:0.06,side:THREE.BackSide})));
+    const pts=makeParticles(120,4,0xffbb88);threeScene.add(pts);
+    startLoop(()=>{piv.rotation.y+=0.005;piv.rotation.x=Math.sin(Date.now()*0.0004)*0.08;pts.rotation.y+=0.002;});
 }
 
-// ---- LUNGS ----
-function buildLungs(container){
-    initThree(container);
-    const pivot = new THREE.Group(); threeScene.userData.pivot = pivot; threeScene.add(pivot);
-
-    const lungMat = new THREE.MeshPhongMaterial({color:0xff7733,emissive:0x441100,shininess:50,transparent:true,opacity:0.9});
-    const tubeMat = new THREE.MeshPhongMaterial({color:0xffaa55,emissive:0x331100});
-
-    // Left lung
-    function makeLung(side){
-        const g = new THREE.Group();
-        // Main lobe
-        const mainGeo = new THREE.SphereGeometry(0.7,32,32);
-        mainGeo.scale(0.8,1.2,0.7);
-        const main = new THREE.Mesh(mainGeo, lungMat);
-        main.position.set(side*0.72,0,0); g.add(main);
-        // Upper lobe
-        const upGeo = new THREE.SphereGeometry(0.45,32,32);
-        upGeo.scale(0.8,1,0.8);
-        const up = new THREE.Mesh(upGeo, lungMat);
-        up.position.set(side*0.68,0.75,0); g.add(up);
-        // Lower lobe
-        const loGeo = new THREE.SphereGeometry(0.5,32,32);
-        loGeo.scale(0.9,0.85,0.85);
-        const lo = new THREE.Mesh(loGeo, lungMat);
-        lo.position.set(side*0.7,-0.72,0); g.add(lo);
-        // Bronchi
-        for(let i=0;i<4;i++){
-            const bGeo = new THREE.CylinderGeometry(0.04,0.04,0.45,8);
-            const b    = new THREE.Mesh(bGeo,tubeMat);
-            b.position.set(side*0.5, 0.3-i*0.25, 0.1);
-            b.rotation.z = side*(0.4+i*0.15);
-            b.rotation.x = 0.2; g.add(b);
-        }
-        pivot.add(g);
+function buildDNA(c){
+    initThree(c);threeCamera.position.set(0,0,6);const piv=new THREE.Group();threeScene.userData.pivot=piv;threeScene.add(piv);
+    const m1=new THREE.MeshPhongMaterial({color:0x00e5ff,emissive:0x003344,shininess:100});
+    const m2=new THREE.MeshPhongMaterial({color:0xff4488,emissive:0x330011,shininess:100});
+    const rm=[new THREE.MeshPhongMaterial({color:0xffdd44,emissive:0x332200,shininess:80}),new THREE.MeshPhongMaterial({color:0x44ff88,emissive:0x003311,shininess:80})];
+    const TURNS=5,PPT=18,TOTAL=TURNS*PPT,R=0.8,H=5;
+    for(let i=0;i<TOTAL;i++){const t=i/TOTAL,a=t*TURNS*Math.PI*2,y=t*H-H/2;
+        const s1=new THREE.Mesh(new THREE.SphereGeometry(0.1,16,16),m1);s1.position.set(Math.cos(a)*R,y,Math.sin(a)*R);piv.add(s1);
+        const s2=new THREE.Mesh(new THREE.SphereGeometry(0.1,16,16),m2);s2.position.set(Math.cos(a+Math.PI)*R,y,Math.sin(a+Math.PI)*R);piv.add(s2);
+        if(i%3===0){const x1=Math.cos(a)*R,z1=Math.sin(a)*R,x2=Math.cos(a+Math.PI)*R,z2=Math.sin(a+Math.PI)*R,len=Math.sqrt((x2-x1)**2+(z2-z1)**2);
+            const rg=new THREE.CylinderGeometry(0.04,0.04,len,8),rm2=new THREE.Mesh(rg,rm[i%2]);rm2.position.set((x1+x2)/2,y,(z1+z2)/2);rm2.rotation.z=Math.PI/2;rm2.rotation.y=-Math.atan2(z2-z1,x2-x1);piv.add(rm2);}
     }
-    makeLung(-1); makeLung(1);
-
-    // Trachea
-    const trachGeo = new THREE.CylinderGeometry(0.12,0.12,1.2,16);
-    const trach    = new THREE.Mesh(trachGeo, tubeMat);
-    trach.position.set(0,0.9,0); pivot.add(trach);
-
-    // Trachea rings
-    for(let i=0;i<6;i++){
-        const rGeo = new THREE.TorusGeometry(0.13,0.025,8,16);
-        const r    = new THREE.Mesh(rGeo,new THREE.MeshPhongMaterial({color:0xffcc88}));
-        r.position.set(0,0.4+i*0.18,0); r.rotation.x=Math.PI/2; pivot.add(r);
-    }
-
-    // Breath glow
-    const glowGeo = new THREE.SphereGeometry(1.4,32,32);
-    const glowMat = new THREE.MeshBasicMaterial({color:0xff8844,transparent:true,opacity:0.05,side:THREE.BackSide});
-    const glow    = new THREE.Mesh(glowGeo,glowMat); threeScene.add(glow);
-
-    // Oxygen particles
-    const pGeo=new THREE.BufferGeometry();
-    const pCount=150, pPos=new Float32Array(pCount*3);
-    for(let i=0;i<pCount;i++){ pPos[i*3]=(Math.random()-0.5)*4; pPos[i*3+1]=(Math.random()-0.5)*4; pPos[i*3+2]=(Math.random()-0.5)*4; }
-    pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
-    const particles=new THREE.Points(pGeo,new THREE.PointsMaterial({color:0x88ddff,size:0.06,transparent:true,opacity:0.7}));
-    threeScene.add(particles);
-
-    let t=0;
-    startLoop(()=>{
-        t+=0.02;
-        pivot.rotation.y+=0.004;
-        // Breathing animation
-        const breath = 1 + 0.07*Math.sin(t*0.8);
-        pivot.scale.set(breath, breath*0.95, breath);
-        glowMat.opacity = 0.03+0.04*Math.sin(t*0.8);
-        particles.rotation.y+=0.002;
-    });
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(2,32,32),new THREE.MeshBasicMaterial({color:0x00e5ff,transparent:true,opacity:0.04,side:THREE.BackSide})));
+    const pts=makeParticles(200,6,0x00e5ff);threeScene.add(pts);
+    startLoop(()=>{piv.rotation.y+=0.006;pts.rotation.y+=0.001;});
 }
 
-// ---- KIDNEY ----
-function buildKidney(container){
-    initThree(container);
-    const pivot = new THREE.Group(); threeScene.userData.pivot = pivot; threeScene.add(pivot);
-
-    const mat     = new THREE.MeshPhongMaterial({color:0xcc4422,emissive:0x440f00,shininess:60});
-    const innerMat= new THREE.MeshPhongMaterial({color:0xff8855,emissive:0x330800,shininess:40,transparent:true,opacity:0.85});
-    const tubeMat = new THREE.MeshPhongMaterial({color:0xffaa66,emissive:0x221100});
-
-    function makeKidney(side){
-        const g = new THREE.Group();
-        // Outer shell — bean shape: squish a sphere
-        const outerGeo = new THREE.SphereGeometry(0.65,32,32);
-        outerGeo.scale(0.75,1,0.55);
-        const outer = new THREE.Mesh(outerGeo,mat);
-        outer.position.set(side*0.85,0,0);
-        if(side===1) outer.scale.x=-1; // mirror
-        g.add(outer);
-
-        // Inner medulla
-        const innerGeo = new THREE.SphereGeometry(0.38,24,24);
-        innerGeo.scale(0.7,0.9,0.5);
-        const inner = new THREE.Mesh(innerGeo,innerMat);
-        inner.position.set(side*0.85,0,0.05);
-        if(side===1) inner.scale.x=-1;
-        g.add(inner);
-
-        // Ureter
-        const uGeo = new THREE.CylinderGeometry(0.05,0.05,0.8,8);
-        const u    = new THREE.Mesh(uGeo,tubeMat);
-        u.position.set(side*0.5,-0.75,0); u.rotation.z=side*0.3; g.add(u);
-
-        pivot.add(g);
-    }
-    makeKidney(-1); makeKidney(1);
-
-    // Renal artery/vein connections
-    const artGeo = new THREE.CylinderGeometry(0.06,0.06,1.0,8);
-    const art    = new THREE.Mesh(artGeo,new THREE.MeshPhongMaterial({color:0xff3333,emissive:0x220000}));
-    art.position.set(0,0.2,0); art.rotation.z=Math.PI/2; pivot.add(art);
-
-    // Glow
-    const glowMat=new THREE.MeshBasicMaterial({color:0xff6633,transparent:true,opacity:0.06,side:THREE.BackSide});
-    pivot.add(new THREE.Mesh(new THREE.SphereGeometry(1.5,32,32),glowMat));
-
-    // Filter particles
-    const pGeo=new THREE.BufferGeometry();
-    const pCount=120, pPos=new Float32Array(pCount*3);
-    for(let i=0;i<pCount;i++){ pPos[i*3]=(Math.random()-0.5)*4; pPos[i*3+1]=(Math.random()-0.5)*4; pPos[i*3+2]=(Math.random()-0.5)*4; }
-    pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
-    const particles=new THREE.Points(pGeo,new THREE.PointsMaterial({color:0xffbb88,size:0.05,transparent:true,opacity:0.6}));
-    threeScene.add(particles);
-
-    startLoop(()=>{
-        pivot.rotation.y+=0.005;
-        pivot.rotation.x=Math.sin(Date.now()*0.0004)*0.08;
-        particles.rotation.y+=0.002;
-    });
+function buildNeuron(c){
+    initThree(c);threeCamera.position.set(0,0,6);const piv=new THREE.Group();threeScene.userData.pivot=piv;threeScene.add(piv);
+    const sm=new THREE.MeshPhongMaterial({color:0xffcc44,emissive:0x332200,shininess:80});
+    const dm=new THREE.MeshPhongMaterial({color:0xff8822,emissive:0x221100,shininess:40});
+    const am=new THREE.MeshPhongMaterial({color:0x44ccff,emissive:0x001133,shininess:90});
+    const mm=new THREE.MeshPhongMaterial({color:0xffffff,emissive:0x111111,transparent:true,opacity:0.7,shininess:120});
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(0.5,32,32),sm));
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(0.22,16,16),new THREE.MeshPhongMaterial({color:0xff4444,emissive:0x220000})));
+    [[0.8,0.6,0.2,0,0,0.4,1.0],[-0.9,0.5,0.1,0,0,-0.3,1.1],[0.3,0.9,-0.2,0.3,0,0,1.0],[-0.4,0.8,0.4,-0.2,0,0.3,0.9],[0.7,-0.5,0.3,0,0,0.3,0.8],[-0.6,-0.6,-0.2,0,0,-0.2,0.9]].forEach(([x,y,z,rx,ry,rz,len])=>{const d=new THREE.Mesh(new THREE.CylinderGeometry(0.04,0.02,len,8),dm);d.position.set(x,y,z);d.rotation.set(rx,ry,rz);piv.add(d);});
+    const ax=new THREE.Mesh(new THREE.CylinderGeometry(0.06,0.06,3,16),am);ax.position.set(0,-2,0);piv.add(ax);
+    for(let i=0;i<5;i++){const ms=new THREE.Mesh(new THREE.CylinderGeometry(0.12,0.12,0.35,16),mm);ms.position.set(0,-0.7-i*0.52,0);piv.add(ms);}
+    for(let i=0;i<4;i++){const a=i*(Math.PI/2),t=new THREE.Mesh(new THREE.SphereGeometry(0.1,12,12),new THREE.MeshPhongMaterial({color:0x00ffaa,emissive:0x003311}));t.position.set(Math.cos(a)*0.3,-3.55,Math.sin(a)*0.3);piv.add(t);}
+    const sigs=[];for(let i=0;i<6;i++){const sp=new THREE.Mesh(new THREE.SphereGeometry(0.08,8,8),new THREE.MeshBasicMaterial({color:0xffff00}));sp.userData.phase=i*(Math.PI*2/6);piv.add(sp);sigs.push(sp);}
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(1.5,32,32),new THREE.MeshBasicMaterial({color:0xffcc44,transparent:true,opacity:0.05,side:THREE.BackSide})));
+    const pts=makeParticles(150,6,0xffee88);threeScene.add(pts);
+    startLoop(()=>{piv.rotation.y+=0.004;const t=Date.now()*0.002;sigs.forEach(sp=>{const ph=sp.userData.phase,pr=(t+ph)%(Math.PI*2);sp.position.set(0,-0.5-(pr/(Math.PI*2))*3.0,0);});pts.rotation.y+=0.001;});
 }
 
-// ---- DNA ----
-function buildDNA(container){
-    initThree(container);
-    threeCamera.position.set(0,0,6);
-    const pivot = new THREE.Group(); threeScene.userData.pivot = pivot; threeScene.add(pivot);
-
-    const mat1 = new THREE.MeshPhongMaterial({color:0x00e5ff,emissive:0x003344,shininess:100});
-    const mat2 = new THREE.MeshPhongMaterial({color:0xff4488,emissive:0x330011,shininess:100});
-    const rungMats=[
-        new THREE.MeshPhongMaterial({color:0xffdd44,emissive:0x332200,shininess:80}),
-        new THREE.MeshPhongMaterial({color:0x44ff88,emissive:0x003311,shininess:80}),
-    ];
-
-    const TURNS=5, PTS_PER_TURN=18, TOTAL=TURNS*PTS_PER_TURN;
-    const radius=0.8, height=5;
-
-    for(let i=0;i<TOTAL;i++){
-        const t    = i/TOTAL;
-        const angle= t*TURNS*Math.PI*2;
-        const y    = t*height - height/2;
-
-        // Strand 1 backbone node
-        const s1g = new THREE.SphereGeometry(0.1,16,16);
-        const s1  = new THREE.Mesh(s1g, mat1);
-        s1.position.set(Math.cos(angle)*radius, y, Math.sin(angle)*radius);
-        pivot.add(s1);
-
-        // Strand 2 backbone node (opposite side)
-        const s2g = new THREE.SphereGeometry(0.1,16,16);
-        const s2  = new THREE.Mesh(s2g, mat2);
-        s2.position.set(Math.cos(angle+Math.PI)*radius, y, Math.sin(angle+Math.PI)*radius);
-        pivot.add(s2);
-
-        // Base pair rungs every 3 nodes
-        if(i%3===0){
-            const x1=Math.cos(angle)*radius, z1=Math.sin(angle)*radius;
-            const x2=Math.cos(angle+Math.PI)*radius, z2=Math.sin(angle+Math.PI)*radius;
-            const dx=x2-x1, dy=0, dz=z2-z1;
-            const len=Math.sqrt(dx*dx+dz*dz);
-            const rg  = new THREE.CylinderGeometry(0.04,0.04,len,8);
-            const rm  = new THREE.Mesh(rg, rungMats[i%2]);
-            rm.position.set((x1+x2)/2, y, (z1+z2)/2);
-            rm.rotation.z = Math.PI/2;
-            rm.rotation.y = -Math.atan2(dz,dx);
-            pivot.add(rm);
-        }
-    }
-
-    // Glow
-    const glowMat=new THREE.MeshBasicMaterial({color:0x00e5ff,transparent:true,opacity:0.04,side:THREE.BackSide});
-    pivot.add(new THREE.Mesh(new THREE.SphereGeometry(2,32,32),glowMat));
-
-    // Particles
-    const pGeo=new THREE.BufferGeometry();
-    const pCount=200, pPos=new Float32Array(pCount*3);
-    for(let i=0;i<pCount;i++){ pPos[i*3]=(Math.random()-0.5)*6; pPos[i*3+1]=(Math.random()-0.5)*6; pPos[i*3+2]=(Math.random()-0.5)*6; }
-    pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
-    const particles=new THREE.Points(pGeo,new THREE.PointsMaterial({color:0x00e5ff,size:0.05,transparent:true,opacity:0.5}));
-    threeScene.add(particles);
-
-    startLoop(()=>{
-        pivot.rotation.y+=0.006;
-        particles.rotation.y+=0.001;
-    });
+function buildEye(c){
+    initThree(c);const piv=new THREE.Group();threeScene.userData.pivot=piv;threeScene.add(piv);
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(1,32,32),new THREE.MeshPhongMaterial({color:0xffffff,emissive:0x111111,shininess:120})));
+    const ig=new THREE.CylinderGeometry(0.42,0.42,0.05,32);const iris=new THREE.Mesh(ig,new THREE.MeshPhongMaterial({color:0x1166ff,emissive:0x001133,shininess:80}));iris.position.set(0,0,0.96);iris.rotation.x=Math.PI/2;piv.add(iris);
+    const pupilG=new THREE.CylinderGeometry(0.2,0.2,0.06,32);const pupil=new THREE.Mesh(pupilG,new THREE.MeshPhongMaterial({color:0x000000,shininess:200}));pupil.position.set(0,0,0.97);pupil.rotation.x=Math.PI/2;piv.add(pupil);
+    const cg=new THREE.SphereGeometry(0.45,32,32,0,Math.PI*2,0,Math.PI/2.5);const corn=new THREE.Mesh(cg,new THREE.MeshPhongMaterial({color:0xaaddff,transparent:true,opacity:0.25,shininess:200}));corn.position.set(0,0,0.7);corn.rotation.x=-Math.PI/2;piv.add(corn);
+    const nv=new THREE.Mesh(new THREE.CylinderGeometry(0.15,0.1,1.2,16),new THREE.MeshPhongMaterial({color:0xffeeaa,emissive:0x221100}));nv.position.set(0,-0.3,-1.0);nv.rotation.x=Math.PI/6;piv.add(nv);
+    const vm=new THREE.MeshBasicMaterial({color:0xff3333});for(let i=0;i<8;i++){const a=i*(Math.PI/4),v=new THREE.Mesh(new THREE.CylinderGeometry(0.012,0.012,0.6,4),vm);v.position.set(Math.cos(a)*0.55,Math.sin(a)*0.55,0.78);v.rotation.z=-a;v.rotation.x=0.4;piv.add(v);}
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(1.2,32,32),new THREE.MeshBasicMaterial({color:0x4488ff,transparent:true,opacity:0.07,side:THREE.BackSide})));
+    const pts=makeParticles(120,5,0x88ccff);threeScene.add(pts);
+    let t=0;startLoop(()=>{t+=0.02;piv.rotation.y+=0.004;const d=0.18+0.06*Math.sin(t*0.4);pupil.scale.set(d/0.2,1,d/0.2);pts.rotation.y+=0.001;});
 }
 
-// ---- NEURON ----
-function buildNeuron(container){
-    initThree(container);
-    threeCamera.position.set(0,0,6);
-    const pivot = new THREE.Group(); threeScene.userData.pivot = pivot; threeScene.add(pivot);
-
-    const somaMat   = new THREE.MeshPhongMaterial({color:0xffcc44,emissive:0x332200,shininess:80});
-    const dendMat   = new THREE.MeshPhongMaterial({color:0xff8822,emissive:0x221100,shininess:40});
-    const axonMat   = new THREE.MeshPhongMaterial({color:0x44ccff,emissive:0x001133,shininess:90});
-    const myelinMat = new THREE.MeshPhongMaterial({color:0xffffff,emissive:0x111111,transparent:true,opacity:0.7,shininess:120});
-
-    // Soma (cell body)
-    const soma=new THREE.Mesh(new THREE.SphereGeometry(0.5,32,32),somaMat);
-    pivot.add(soma);
-
-    // Nucleus
-    const nuc=new THREE.Mesh(new THREE.SphereGeometry(0.22,16,16),new THREE.MeshPhongMaterial({color:0xff4444,emissive:0x220000}));
-    pivot.add(nuc);
-
-    // Dendrites
-    const dendData=[
-        [0.8,0.6,0.2, 0,0,0.4, 1.0],[-0.9,0.5,0.1, 0,0,-0.3, 1.1],
-        [0.3,0.9,-0.2, 0.3,0,0, 1.0],[-0.4,0.8,0.4, -0.2,0,0.3,0.9],
-        [0.7,-0.5,0.3, 0,0,0.3, 0.8],[-0.6,-0.6,-0.2, 0,0,-0.2,0.9],
-    ];
-    dendData.forEach(([x,y,z,rx,ry,rz,len])=>{
-        const g=new THREE.CylinderGeometry(0.04,0.02,len,8);
-        const m=new THREE.Mesh(g,dendMat);
-        m.position.set(x,y,z);
-        m.rotation.set(rx,ry,rz);
-        pivot.add(m);
-        // tip
-        const tip=new THREE.Mesh(new THREE.SphereGeometry(0.06,8,8),dendMat);
-        tip.position.set(x+Math.sin(rz)*len*0.5, y+Math.cos(rx)*len*0.5, z);
-        pivot.add(tip);
-    });
-
-    // Axon
-    const axonGeo=new THREE.CylinderGeometry(0.06,0.06,3,16);
-    const axon=new THREE.Mesh(axonGeo,axonMat); axon.position.set(0,-2,0); pivot.add(axon);
-
-    // Myelin sheaths
-    for(let i=0;i<5;i++){
-        const mg=new THREE.CylinderGeometry(0.12,0.12,0.35,16);
-        const mm=new THREE.Mesh(mg,myelinMat); mm.position.set(0,-0.7-i*0.52,0); pivot.add(mm);
-    }
-
-    // Axon terminals
-    for(let i=0;i<4;i++){
-        const angle=i*(Math.PI/2);
-        const tg=new THREE.SphereGeometry(0.1,12,12);
-        const tm=new THREE.Mesh(tg,new THREE.MeshPhongMaterial({color:0x00ffaa,emissive:0x003311}));
-        tm.position.set(Math.cos(angle)*0.3,-3.55,Math.sin(angle)*0.3); pivot.add(tm);
-    }
-
-    // Signal particles travelling down axon
-    const sigParticles=[];
-    for(let i=0;i<6;i++){
-        const sp=new THREE.Mesh(new THREE.SphereGeometry(0.08,8,8),
-            new THREE.MeshBasicMaterial({color:0xffff00}));
-        sp.userData.phase=i*(Math.PI*2/6);
-        pivot.add(sp); sigParticles.push(sp);
-    }
-
-    // Glow
-    pivot.add(new THREE.Mesh(new THREE.SphereGeometry(1.5,32,32),
-        new THREE.MeshBasicMaterial({color:0xffcc44,transparent:true,opacity:0.05,side:THREE.BackSide})));
-
-    // Particles
-    const pGeo=new THREE.BufferGeometry();
-    const pPos=new Float32Array(150*3);
-    for(let i=0;i<150;i++){ pPos[i*3]=(Math.random()-0.5)*6; pPos[i*3+1]=(Math.random()-0.5)*6; pPos[i*3+2]=(Math.random()-0.5)*6; }
-    pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
-    const particles=new THREE.Points(pGeo,new THREE.PointsMaterial({color:0xffee88,size:0.05,transparent:true,opacity:0.5}));
-    threeScene.add(particles);
-
-    startLoop(()=>{
-        pivot.rotation.y+=0.004;
-        const t=Date.now()*0.002;
-        sigParticles.forEach(sp=>{
-            const phase=sp.userData.phase;
-            const progress=(t+phase)%(Math.PI*2);
-            const y = -0.5 - (progress/(Math.PI*2))*3.0;
-            sp.position.set(0,y,0);
-            sp.material.opacity=0.4+0.6*Math.sin(progress*3);
-        });
-        particles.rotation.y+=0.001;
-    });
+function buildStomach(c){
+    initThree(c);const piv=new THREE.Group();threeScene.userData.pivot=piv;threeScene.add(piv);
+    const mat=new THREE.MeshPhongMaterial({color:0xff9933,emissive:0x331100,shininess:50,transparent:true,opacity:0.92});
+    const tm=new THREE.MeshPhongMaterial({color:0xffbb55,emissive:0x221100});
+    const bg=new THREE.SphereGeometry(0.9,32,32);bg.scale(1,1.1,0.75);const body=new THREE.Mesh(bg,mat);piv.add(body);
+    const pg=new THREE.SphereGeometry(0.4,16,16);pg.scale(1.2,0.85,0.7);const pyl=new THREE.Mesh(pg,mat);pyl.position.set(0.9,-0.5,0);piv.add(pyl);
+    const ca=new THREE.Mesh(new THREE.CylinderGeometry(0.18,0.22,0.55,16),tm);ca.position.set(-0.35,0.9,0);ca.rotation.z=0.4;piv.add(ca);
+    const cn=new THREE.Mesh(new THREE.CylinderGeometry(0.13,0.13,0.5,16),tm);cn.position.set(1.3,-0.6,0);cn.rotation.z=Math.PI/2+0.3;piv.add(cn);
+    for(let i=0;i<6;i++){const r=new THREE.Mesh(new THREE.TorusGeometry(0.55,0.04,8,32,Math.PI),new THREE.MeshPhongMaterial({color:0xffaa44,emissive:0x221100}));r.rotation.x=Math.PI/2;r.rotation.z=(i/6)*Math.PI*2;r.position.set(0,i*0.08-0.2,0);piv.add(r);}
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(1.4,32,32),new THREE.MeshBasicMaterial({color:0xff9933,transparent:true,opacity:0.06,side:THREE.BackSide})));
+    const pts=makeParticles(120,5,0xffcc88);threeScene.add(pts);
+    let t=0;startLoop(()=>{t+=0.02;piv.rotation.y+=0.005;piv.rotation.x=Math.sin(t*0.5)*0.06;pts.rotation.y+=0.001;});
 }
 
-// ---- EYE ----
-function buildEye(container){
-    initThree(container);
-    threeCamera.position.set(0,0,4);
-    const pivot = new THREE.Group(); threeScene.userData.pivot = pivot; threeScene.add(pivot);
-
-    // Sclera (white)
-    const scleraMat=new THREE.MeshPhongMaterial({color:0xffffff,emissive:0x111111,shininess:120});
-    const sclera=new THREE.Mesh(new THREE.SphereGeometry(1,32,32),scleraMat); pivot.add(sclera);
-
-    // Iris
-    const irisMat=new THREE.MeshPhongMaterial({color:0x1166ff,emissive:0x001133,shininess:80});
-    const irisGeo=new THREE.CylinderGeometry(0.42,0.42,0.05,32);
-    const iris=new THREE.Mesh(irisGeo,irisMat); iris.position.set(0,0,0.96); iris.rotation.x=Math.PI/2; pivot.add(iris);
-
-    // Pupil
-    const pupilMat=new THREE.MeshPhongMaterial({color:0x000000,emissive:0x000000,shininess:200});
-    const pupilGeo=new THREE.CylinderGeometry(0.2,0.2,0.06,32);
-    const pupil=new THREE.Mesh(pupilGeo,pupilMat); pupil.position.set(0,0,0.97); pupil.rotation.x=Math.PI/2; pivot.add(pupil);
-
-    // Cornea (transparent bulge)
-    const corneaMat=new THREE.MeshPhongMaterial({color:0xaaddff,transparent:true,opacity:0.25,shininess:200});
-    const corneaGeo=new THREE.SphereGeometry(0.45,32,32,0,Math.PI*2,0,Math.PI/2.5);
-    const cornea=new THREE.Mesh(corneaGeo,corneaMat); cornea.position.set(0,0,0.7); cornea.rotation.x=-Math.PI/2; pivot.add(cornea);
-
-    // Optic nerve
-    const nerveMat=new THREE.MeshPhongMaterial({color:0xffeeaa,emissive:0x221100});
-    const nerveGeo=new THREE.CylinderGeometry(0.15,0.1,1.2,16);
-    const nerve=new THREE.Mesh(nerveGeo,nerveMat); nerve.position.set(0,-0.3,-1.0); nerve.rotation.x=Math.PI/6; pivot.add(nerve);
-
-    // Blood vessels (thin red arcs)
-    const vessMat=new THREE.MeshBasicMaterial({color:0xff3333});
-    for(let i=0;i<8;i++){
-        const angle=i*(Math.PI/4);
-        const vg=new THREE.CylinderGeometry(0.012,0.012,0.6,4);
-        const v=new THREE.Mesh(vg,vessMat);
-        v.position.set(Math.cos(angle)*0.55,Math.sin(angle)*0.55,0.78);
-        v.rotation.z=-angle; v.rotation.x=0.4; pivot.add(v);
-    }
-
-    // Glow
-    pivot.add(new THREE.Mesh(new THREE.SphereGeometry(1.2,32,32),
-        new THREE.MeshBasicMaterial({color:0x4488ff,transparent:true,opacity:0.07,side:THREE.BackSide})));
-
-    const pGeo=new THREE.BufferGeometry();
-    const pPos=new Float32Array(120*3);
-    for(let i=0;i<120;i++){ pPos[i*3]=(Math.random()-0.5)*5; pPos[i*3+1]=(Math.random()-0.5)*5; pPos[i*3+2]=(Math.random()-0.5)*5; }
-    pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
-    const particles=new THREE.Points(pGeo,new THREE.PointsMaterial({color:0x88ccff,size:0.05,transparent:true,opacity:0.5}));
-    threeScene.add(particles);
-
-    let t=0;
-    startLoop(()=>{
-        t+=0.02;
-        pivot.rotation.y+=0.004;
-        // Pupil dilation
-        const dil=0.18+0.06*Math.sin(t*0.4);
-        pupil.scale.set(dil/0.2,1,dil/0.2);
-        particles.rotation.y+=0.001;
-    });
+function buildLiver(c){
+    initThree(c);const piv=new THREE.Group();threeScene.userData.pivot=piv;threeScene.add(piv);
+    const mat=new THREE.MeshPhongMaterial({color:0x882222,emissive:0x2d0808,shininess:60});
+    const rg=new THREE.SphereGeometry(1.0,32,32);rg.scale(1.3,0.85,0.7);const rl=new THREE.Mesh(rg,mat);rl.position.set(-0.3,0,0);piv.add(rl);
+    const lg=new THREE.SphereGeometry(0.6,32,32);lg.scale(1.1,0.75,0.65);const ll=new THREE.Mesh(lg,mat);ll.position.set(0.95,0.15,0);piv.add(ll);
+    const gb=new THREE.Mesh(new THREE.SphereGeometry(0.25,16,16),new THREE.MeshPhongMaterial({color:0x88bb22,emissive:0x223300,shininess:80,transparent:true,opacity:0.9}));gb.position.set(0.2,-0.65,0.2);piv.add(gb);
+    const pv=new THREE.Mesh(new THREE.CylinderGeometry(0.08,0.08,1,16),new THREE.MeshPhongMaterial({color:0x4444cc,emissive:0x000022}));pv.position.set(-0.1,-0.7,0);pv.rotation.z=0.2;piv.add(pv);
+    [[0.2,0.4,0,0,0,0.3,0.6],[-0.3,0.35,0,0,0,-0.3,0.5],[0,0.5,0.2,0.2,0,0,0.5]].forEach(([x,y,z,rx,ry,rz,h])=>{const v=new THREE.Mesh(new THREE.CylinderGeometry(0.05,0.05,h,8),new THREE.MeshPhongMaterial({color:0x224488,emissive:0x000011}));v.position.set(x,y,z);v.rotation.set(rx,ry,rz);piv.add(v);});
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(1.6,32,32),new THREE.MeshBasicMaterial({color:0xaa2222,transparent:true,opacity:0.06,side:THREE.BackSide})));
+    const pts=makeParticles(120,5,0xff8888);threeScene.add(pts);
+    startLoop(()=>{piv.rotation.y+=0.005;pts.rotation.y+=0.001;});
 }
 
-// ---- STOMACH ----
-function buildStomach(container){
-    initThree(container);
-    const pivot = new THREE.Group(); threeScene.userData.pivot = pivot; threeScene.add(pivot);
-
-    const mat   = new THREE.MeshPhongMaterial({color:0xff9933,emissive:0x331100,shininess:50,transparent:true,opacity:0.92});
-    const wireMat=new THREE.MeshBasicMaterial({color:0xffcc66,wireframe:true,transparent:true,opacity:0.12});
-    const tubeMat=new THREE.MeshPhongMaterial({color:0xffbb55,emissive:0x221100});
-
-    // Stomach body — J-shaped approximation via scaled spheres
-    const bodyGeo=new THREE.SphereGeometry(0.9,32,32); bodyGeo.scale(1,1.1,0.75);
-    const body=new THREE.Mesh(bodyGeo,mat); body.position.set(0,0,0); pivot.add(body);
-    pivot.add(new THREE.Mesh(bodyGeo,wireMat));
-
-    // Pylorus (right exit)
-    const pylGeo=new THREE.SphereGeometry(0.4,16,16); pylGeo.scale(1.2,0.85,0.7);
-    const pyl=new THREE.Mesh(pylGeo,mat); pyl.position.set(0.9,-0.5,0); pivot.add(pyl);
-
-    // Cardia (upper entry)
-    const cardGeo=new THREE.CylinderGeometry(0.18,0.22,0.55,16);
-    const card=new THREE.Mesh(cardGeo,tubeMat); card.position.set(-0.35,0.9,0); card.rotation.z=0.4; pivot.add(card);
-
-    // Pyloric canal exit
-    const canGeo=new THREE.CylinderGeometry(0.13,0.13,0.5,16);
-    const can=new THREE.Mesh(canGeo,tubeMat); can.position.set(1.3,-0.6,0); can.rotation.z=Math.PI/2+0.3; pivot.add(can);
-
-    // Rugae folds (ridges inside stomach)
-    for(let i=0;i<6;i++){
-        const rg=new THREE.TorusGeometry(0.55,0.04,8,32,Math.PI);
-        const rm=new THREE.Mesh(rg,new THREE.MeshPhongMaterial({color:0xffaa44,emissive:0x221100}));
-        rm.rotation.x=Math.PI/2; rm.rotation.z=(i/6)*Math.PI*2;
-        rm.position.set(0,i*0.08-0.2,0); pivot.add(rm);
-    }
-
-    // Glow
-    pivot.add(new THREE.Mesh(new THREE.SphereGeometry(1.4,32,32),
-        new THREE.MeshBasicMaterial({color:0xff9933,transparent:true,opacity:0.06,side:THREE.BackSide})));
-
-    const pGeo=new THREE.BufferGeometry();
-    const pPos=new Float32Array(120*3);
-    for(let i=0;i<120;i++){ pPos[i*3]=(Math.random()-0.5)*5; pPos[i*3+1]=(Math.random()-0.5)*5; pPos[i*3+2]=(Math.random()-0.5)*5; }
-    pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
-    const particles=new THREE.Points(pGeo,new THREE.PointsMaterial({color:0xffcc88,size:0.05,transparent:true,opacity:0.5}));
-    threeScene.add(particles);
-
-    let t=0;
-    startLoop(()=>{ t+=0.02; pivot.rotation.y+=0.005; pivot.rotation.x=Math.sin(t*0.5)*0.06; particles.rotation.y+=0.001; });
-}
-
-// ---- LIVER ----
-function buildLiver(container){
-    initThree(container);
-    const pivot = new THREE.Group(); threeScene.userData.pivot = pivot; threeScene.add(pivot);
-
-    const mat   =new THREE.MeshPhongMaterial({color:0x882222,emissive:0x2d0808,shininess:60});
-    const wireMat=new THREE.MeshBasicMaterial({color:0xcc4444,wireframe:true,transparent:true,opacity:0.12});
-
-    // Right lobe (bigger)
-    const rgGeo=new THREE.SphereGeometry(1.0,32,32); rgGeo.scale(1.3,0.85,0.7);
-    const rl=new THREE.Mesh(rgGeo,mat); rl.position.set(-0.3,0,0); pivot.add(rl);
-    pivot.add(Object.assign(new THREE.Mesh(rgGeo,wireMat),{position:rl.position}));
-
-    // Left lobe (smaller)
-    const lgGeo=new THREE.SphereGeometry(0.6,32,32); lgGeo.scale(1.1,0.75,0.65);
-    const ll=new THREE.Mesh(lgGeo,mat); ll.position.set(0.95,0.15,0); pivot.add(ll);
-
-    // Gallbladder
-    const gbMat=new THREE.MeshPhongMaterial({color:0x88bb22,emissive:0x223300,shininess:80,transparent:true,opacity:0.9});
-    const gb=new THREE.Mesh(new THREE.SphereGeometry(0.25,16,16),gbMat); gb.position.set(0.2,-0.65,0.2); pivot.add(gb);
-
-    // Portal vein
-    const pvMat=new THREE.MeshPhongMaterial({color:0x4444cc,emissive:0x000022});
-    const pvGeo=new THREE.CylinderGeometry(0.08,0.08,1,16);
-    const pv=new THREE.Mesh(pvGeo,pvMat); pv.position.set(-0.1,-0.7,0); pv.rotation.z=0.2; pivot.add(pv);
-
-    // Hepatic veins (tree branching)
-    const hvMat=new THREE.MeshPhongMaterial({color:0x224488,emissive:0x000011});
-    [[0.2,0.4,0,0,0,0.3,0.6],[-0.3,0.35,0,0,0,-0.3,0.5],[0,0.5,0.2,0.2,0,0,0.5]].forEach(([x,y,z,rx,ry,rz,h])=>{
-        const g=new THREE.CylinderGeometry(0.05,0.05,h,8);
-        const m=new THREE.Mesh(g,hvMat); m.position.set(x,y,z); m.rotation.set(rx,ry,rz); pivot.add(m);
-    });
-
-    // Glow
-    pivot.add(new THREE.Mesh(new THREE.SphereGeometry(1.6,32,32),
-        new THREE.MeshBasicMaterial({color:0xaa2222,transparent:true,opacity:0.06,side:THREE.BackSide})));
-
-    const pGeo=new THREE.BufferGeometry();
-    const pPos=new Float32Array(120*3);
-    for(let i=0;i<120;i++){ pPos[i*3]=(Math.random()-0.5)*5; pPos[i*3+1]=(Math.random()-0.5)*5; pPos[i*3+2]=(Math.random()-0.5)*5; }
-    pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
-    const particles=new THREE.Points(pGeo,new THREE.PointsMaterial({color:0xff8888,size:0.05,transparent:true,opacity:0.5}));
-    threeScene.add(particles);
-
-    startLoop(()=>{ pivot.rotation.y+=0.005; particles.rotation.y+=0.001; });
-}
-
-// ---- ATOM (generic science fallback) ----
-function buildAtom(container, label){
-    initThree(container);
-    threeCamera.position.set(0,0,5);
-    const pivot = new THREE.Group(); threeScene.userData.pivot = pivot; threeScene.add(pivot);
-
-    // Nucleus
-    const nucMat=new THREE.MeshPhongMaterial({color:0xff4400,emissive:0x330800,shininess:100});
-    const nuc=new THREE.Mesh(new THREE.SphereGeometry(0.35,32,32),nucMat); pivot.add(nuc);
-
-    // Proton / neutron bumps
-    for(let i=0;i<8;i++){
-        const angle=(i/8)*Math.PI*2;
-        const bm=new THREE.Mesh(new THREE.SphereGeometry(0.12,12,12),
-            new THREE.MeshPhongMaterial({color:i%2===0?0xff6600:0x4488ff,emissive:0x111100}));
-        bm.position.set(Math.cos(angle)*0.28,Math.sin(angle)*0.28,(Math.random()-0.5)*0.2); pivot.add(bm);
-    }
-
-    // Electron orbits + electrons
-    const orbitColors=[0x00e5ff,0xff4488,0x44ff88];
-    const orbits=[];
-    orbitColors.forEach((col,i)=>{
-        const orbitGroup=new THREE.Group();
-        const r=0.9+i*0.45;
-        // Orbit ring
-        const ring=new THREE.Mesh(new THREE.TorusGeometry(r,0.02,8,64),
-            new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.4}));
-        orbitGroup.rotation.x=(i*Math.PI)/3;
-        orbitGroup.rotation.z=(i*Math.PI)/4;
-        orbitGroup.add(ring);
-        // Electron
-        const el=new THREE.Mesh(new THREE.SphereGeometry(0.1,12,12),
-            new THREE.MeshPhongMaterial({color:col,emissive:col,shininess:150}));
-        el.userData={r,phase:i*(Math.PI*2/3)};
-        orbitGroup.add(el);
-        pivot.add(orbitGroup);
-        orbits.push({group:orbitGroup,electron:el,r,speed:0.02-i*0.004});
-    });
-
-    // Glow
-    pivot.add(new THREE.Mesh(new THREE.SphereGeometry(2,32,32),
-        new THREE.MeshBasicMaterial({color:0x00e5ff,transparent:true,opacity:0.05,side:THREE.BackSide})));
-
-    const pGeo=new THREE.BufferGeometry();
-    const pPos=new Float32Array(200*3);
-    for(let i=0;i<200;i++){ pPos[i*3]=(Math.random()-0.5)*7; pPos[i*3+1]=(Math.random()-0.5)*7; pPos[i*3+2]=(Math.random()-0.5)*7; }
-    pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
-    const particles=new THREE.Points(pGeo,new THREE.PointsMaterial({color:0x00e5ff,size:0.04,transparent:true,opacity:0.4}));
-    threeScene.add(particles);
-
-    let t=0;
-    startLoop(()=>{
-        t+=0.02;
-        pivot.rotation.y+=0.004;
-        orbits.forEach(o=>{
-            o.electron.userData.phase+=o.speed;
-            o.electron.position.set(
-                Math.cos(o.electron.userData.phase)*o.r, 0,
-                Math.sin(o.electron.userData.phase)*o.r
-            );
-        });
-        particles.rotation.y+=0.001;
-    });
+function buildAtom(c){
+    initThree(c);threeCamera.position.set(0,0,5);const piv=new THREE.Group();threeScene.userData.pivot=piv;threeScene.add(piv);
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(0.35,32,32),new THREE.MeshPhongMaterial({color:0xff4400,emissive:0x330800,shininess:100})));
+    for(let i=0;i<8;i++){const a=(i/8)*Math.PI*2,b=new THREE.Mesh(new THREE.SphereGeometry(0.12,12,12),new THREE.MeshPhongMaterial({color:i%2===0?0xff6600:0x4488ff,emissive:0x111100}));b.position.set(Math.cos(a)*0.28,Math.sin(a)*0.28,(Math.random()-0.5)*0.2);piv.add(b);}
+    const orbs=[];[0x00e5ff,0xff4488,0x44ff88].forEach((col,i)=>{const og=new THREE.Group(),r=0.9+i*0.45;og.add(new THREE.Mesh(new THREE.TorusGeometry(r,0.02,8,64),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.4})));og.rotation.x=(i*Math.PI)/3;og.rotation.z=(i*Math.PI)/4;const el=new THREE.Mesh(new THREE.SphereGeometry(0.1,12,12),new THREE.MeshPhongMaterial({color:col,emissive:col,shininess:150}));el.userData={r,phase:i*(Math.PI*2/3)};og.add(el);piv.add(og);orbs.push({electron:el,r,speed:0.02-i*0.004});});
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(2,32,32),new THREE.MeshBasicMaterial({color:0x00e5ff,transparent:true,opacity:0.05,side:THREE.BackSide})));
+    const pts=makeParticles(200,7,0x00e5ff);threeScene.add(pts);
+    startLoop(()=>{piv.rotation.y+=0.004;orbs.forEach(o=>{o.electron.userData.phase+=o.speed;o.electron.position.set(Math.cos(o.electron.userData.phase)*o.r,0,Math.sin(o.electron.userData.phase)*o.r);});pts.rotation.y+=0.001;});
 }
 
 // ================================================================
-// TOPIC → MODEL MAPPING
+// MODEL MAP
 // ================================================================
-const modelMap = [
-    { keywords:['heart','cardiac','cardiovascular'],  builder: buildHeart,   label:'❤️ HEART' },
-    { keywords:['brain','cerebral','neuroscience','mind','cerebr'],  builder: buildBrain,   label:'🧠 BRAIN' },
-    { keywords:['lung','lungs','respiratory','breath','pulmon'], builder: buildLungs,   label:'🫁 LUNGS' },
-    { keywords:['kidney','renal','nephron'],           builder: buildKidney,  label:'🫘 KIDNEY' },
-    { keywords:['dna','gene','genetics','chromosome','helix'], builder: buildDNA,     label:'🧬 DNA' },
-    { keywords:['neuron','nerve','synapse','neural','axon','dendrite'], builder: buildNeuron, label:'⚡ NEURON' },
-    { keywords:['eye','optic','retina','vision','cornea','pupil'], builder: buildEye,    label:'👁️ EYE' },
-    { keywords:['stomach','digest','gastric','gastro'], builder: buildStomach, label:'🫄 STOMACH' },
-    { keywords:['liver','hepatic','bile'],              builder: buildLiver,   label:'🟤 LIVER' },
-    { keywords:['atom','molecule','electron','proton','nuclear','chemistry','cell','wifi','electric','physics','solar','planet','space'], builder: buildAtom, label:'⚛️ 3D MODEL' },
+const modelMap=[
+    {keywords:['heart','cardiac','cardiovascular'],builder:buildHeart,label:'❤️ HEART'},
+    {keywords:['brain','cerebral','neuroscience','mind'],builder:buildBrain,label:'🧠 BRAIN'},
+    {keywords:['lung','lungs','respiratory','breath','pulmon'],builder:buildLungs,label:'🫁 LUNGS'},
+    {keywords:['kidney','renal','nephron'],builder:buildKidney,label:'🫘 KIDNEY'},
+    {keywords:['dna','gene','genetics','chromosome','helix'],builder:buildDNA,label:'🧬 DNA'},
+    {keywords:['neuron','nerve','synapse','neural','axon','dendrite'],builder:buildNeuron,label:'⚡ NEURON'},
+    {keywords:['eye','optic','retina','vision','cornea','pupil'],builder:buildEye,label:'👁️ EYE'},
+    {keywords:['stomach','digest','gastric'],builder:buildStomach,label:'🫄 STOMACH'},
+    {keywords:['liver','hepatic','bile'],builder:buildLiver,label:'🟤 LIVER'},
+    {keywords:['atom','molecule','electron','proton','chemistry','cell','wifi','electric','physics','solar','planet','space','water','light'],builder:buildAtom,label:'⚛️ MODEL'},
 ];
-
-function detectModel(query){
-    const q = query.toLowerCase();
-    for(const entry of modelMap){
-        if(entry.keywords.some(k => q.includes(k))) return entry;
-    }
-    return null;
-}
+function detectModel(q){const ql=q.toLowerCase();for(const e of modelMap)if(e.keywords.some(k=>ql.includes(k)))return e;return null;}
 
 // ================================================================
-// GROQ API
+// FETCH EXPLANATION — calls our secure /api/explain proxy
 // ================================================================
-const GROQ_API_KEY = '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'; // <-- REPLACE
-
 async function fetchExplanation(query){
-    const systemPrompt = isPro
-        ? 'Explain in 4-5 detailed paragraphs. No markdown. Add interesting facts and real-world examples. Make it feel like a deep research answer.'
-        : 'Explain clearly in 2-3 short paragraphs. No markdown. Use simple language for a 14-year-old. Keep it engaging.';
-    try {
-        const res  = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+    try{
+        const res=await fetch('/api/explain',{
             method:'POST',
-            headers:{'Content-Type':'application/json','Authorization':'Bearer '+GROQ_API_KEY},
-            body: JSON.stringify({
-                model:'llama-3.3-70b-versatile',
-                messages:[{role:'system',content:systemPrompt},{role:'user',content:query}],
-                max_tokens: isPro?1000:600, temperature:0.7
-            })
+            headers:{'Content-Type':'application/json'},
+            // Key is NEVER sent from the browser — the server holds it
+            body:JSON.stringify({query,isPro})
         });
-        const data = await res.json();
-        return data.choices[0].message.content.replace(/\n/g,'<br>');
-    } catch(e){
-        return '<span style="color:#ff4466;">⚠️ Could not load explanation. Check your Groq API key.</span>';
+        if(!res.ok) return '<span style="color:#ff4466;">⚠️ Server error. Please try again.</span>';
+        const data=await res.json();
+        return data.answer ? data.answer.replace(/\n/g,'<br>') : '<span style="color:#ff4466;">⚠️ No answer returned.</span>';
+    }catch(e){
+        return '<span style="color:#ff4466;">⚠️ Could not reach server. Are you running on Vercel?</span>';
     }
 }
 
 // ================================================================
-// MAIN VISUALISE FUNCTION
+// MAIN VISUALISE
 // ================================================================
 async function visualise(){
-    const query = document.getElementById('searchInput').value.trim();
-    if(!query) return;
-
-    const resultArea    = document.getElementById('resultArea');
-    const flipCard      = document.getElementById('flipCard');
-    const visualDiv     = document.getElementById('visualContainer');
-    const aiDiv         = document.getElementById('aiAnswer');
-    const flipToggleBtn = document.getElementById('flipToggle');
-
-    // Reset state
+    const query=document.getElementById('searchInput').value.trim();
+    if(!query)return;
+    const resultArea=document.getElementById('resultArea');
+    const flipCard=document.getElementById('flipCard');
+    const visualDiv=document.getElementById('visualContainer');
+    const aiDiv=document.getElementById('aiAnswer');
+    const ft=document.getElementById('flipToggle');
     flipCard.classList.remove('flipped');
-    flipToggleBtn.innerHTML = '🔄 FLIP — VIEW EXPLANATION';
+    ft.innerHTML='🔄 FLIP — VIEW EXPLANATION';
     resultArea.classList.add('visible');
-
-    // Show loading
     destroyThree();
-    visualDiv.innerHTML = `<div class="loading-state"><div class="spinner"></div><span>BUILDING 3D MODEL...</span></div>`;
-    aiDiv.innerHTML     = `<span style="color:#5a7a95;">Generating explanation...</span>`;
-
-    // Detect and render model
-    const match = detectModel(query);
-
+    visualDiv.innerHTML=`<div class="loading-state"><div class="spinner"></div><span>BUILDING 3D MODEL...</span></div>`;
+    aiDiv.innerHTML=`<span style="color:#5a7a95;">Generating explanation...</span>`;
+    const match=detectModel(query);
     if(match){
-        // Clear container and build Three.js scene
-        visualDiv.innerHTML = '';
-
-        // Label badge
-        const badge = document.createElement('div');
-        badge.className = 'model-label';
-        badge.textContent = match.label;
-        visualDiv.appendChild(badge);
-
-        // Controls
-        const controls = document.createElement('div');
-        controls.className = 'viewer-controls';
-        controls.innerHTML = `
-            <button class="layer-btn" id="resetViewBtn">⟳ Reset</button>
-            <button class="layer-btn" id="zoomInBtn">+ Zoom</button>
-            <button class="layer-btn" id="zoomOutBtn">− Zoom</button>
-        `;
-        visualDiv.appendChild(controls);
-
-        // Build the 3D model
+        visualDiv.innerHTML='';
+        const badge=document.createElement('div');badge.className='model-label';badge.textContent=match.label;visualDiv.appendChild(badge);
+        const ctrl=document.createElement('div');ctrl.className='viewer-controls';ctrl.innerHTML=`<button class="layer-btn" id="resetViewBtn">⟳ Reset</button><button class="layer-btn" id="zoomInBtn">+ Zoom</button><button class="layer-btn" id="zoomOutBtn">− Zoom</button>`;visualDiv.appendChild(ctrl);
         match.builder(visualDiv);
-
-        // Hint label
-        const hint=document.createElement('div');
-        hint.style.cssText='position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-size:0.6rem;color:#5a7a95;font-family:Orbitron,sans-serif;letter-spacing:0.1em;pointer-events:none;';
-        hint.textContent='DRAG TO ROTATE';
-        visualDiv.appendChild(hint);
-
-        // Control handlers
-        document.getElementById('resetViewBtn').onclick=()=>{ if(threeScene&&threeScene.userData.pivot){ threeScene.userData.pivot.rotation.set(0,0,0); }};
-        document.getElementById('zoomInBtn').onclick=()=>{ if(threeCamera) threeCamera.position.z=Math.max(1.5,threeCamera.position.z-0.5); };
-        document.getElementById('zoomOutBtn').onclick=()=>{ if(threeCamera) threeCamera.position.z=Math.min(10,threeCamera.position.z+0.5); };
-
-    } else {
-        visualDiv.innerHTML = `
-            <div class="no-visual-msg">
-                <div style="font-size:2rem;">🔭</div>
-                <div>Try: <span>heart, brain, lungs, kidney, DNA, eye, neuron, stomach, liver, atom</span></div>
-                <div style="font-size:0.75rem;margin-top:4px;color:#3a5a75;">More models coming with Pro</div>
-            </div>`;
+        const hint=document.createElement('div');hint.style.cssText='position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-size:0.6rem;color:#5a7a95;font-family:Orbitron,sans-serif;letter-spacing:0.1em;pointer-events:none;';hint.textContent='DRAG TO ROTATE';visualDiv.appendChild(hint);
+        document.getElementById('resetViewBtn').onclick=()=>{if(threeScene&&threeScene.userData.pivot)threeScene.userData.pivot.rotation.set(0,0,0);};
+        document.getElementById('zoomInBtn').onclick=()=>{if(threeCamera)threeCamera.position.z=Math.max(1.5,threeCamera.position.z-0.5);};
+        document.getElementById('zoomOutBtn').onclick=()=>{if(threeCamera)threeCamera.position.z=Math.min(10,threeCamera.position.z+0.5);};
+    }else{
+        visualDiv.innerHTML=`<div class="no-visual-msg"><div style="font-size:2rem;">🔭</div><div>Try: <span>heart, brain, lungs, kidney, DNA, eye, neuron, stomach, liver, atom</span></div><div style="font-size:0.75rem;margin-top:4px;color:#3a5a75;">More models coming with Pro</div></div>`;
     }
-
-    // Fetch AI explanation simultaneously
-    aiDiv.innerHTML = await fetchExplanation(query);
+    aiDiv.innerHTML=await fetchExplanation(query);
 }
 
 function lucky(){
-    const topics=['How does the heart work?','Explain the human brain','How do lungs work?','What is DNA?','How do kidneys function?','What is a neuron?','How does the eye see?','How does the stomach work?','What does the liver do?','What is an atom?'];
-    document.getElementById('searchInput').value = topics[Math.floor(Math.random()*topics.length)];
+    const t=['How does the heart work?','Explain the human brain','How do lungs work?','What is DNA?','How do kidneys function?','What is a neuron?','How does the eye see?','How does the stomach work?','What does the liver do?','What is an atom?'];
+    document.getElementById('searchInput').value=t[Math.floor(Math.random()*t.length)];
     visualise();
 }
 
 // ================================================================
-// FLIP CARD
+// FLIP + EVENTS
 // ================================================================
-const flipToggle = document.getElementById('flipToggle');
-const flipCard   = document.getElementById('flipCard');
-flipToggle.addEventListener('click',()=>{
-    flipCard.classList.toggle('flipped');
-    flipToggle.innerHTML = flipCard.classList.contains('flipped')
-        ? '🔄 FLIP — VIEW 3D MODEL'
-        : '🔄 FLIP — VIEW EXPLANATION';
-});
-
-// ================================================================
-// EVENT LISTENERS
-// ================================================================
-document.getElementById('visualiseBtn').addEventListener('click', visualise);
-document.getElementById('luckyBtn').addEventListener('click', lucky);
-document.getElementById('searchInput').addEventListener('keypress', e=>{ if(e.key==='Enter') visualise(); });
+document.getElementById('flipToggle').addEventListener('click',()=>{const fc=document.getElementById('flipCard');fc.classList.toggle('flipped');document.getElementById('flipToggle').innerHTML=fc.classList.contains('flipped')?'🔄 FLIP — VIEW 3D MODEL':'🔄 FLIP — VIEW EXPLANATION';});
+document.getElementById('visualiseBtn').addEventListener('click',visualise);
+document.getElementById('luckyBtn').addEventListener('click',lucky);
+document.getElementById('searchInput').addEventListener('keypress',e=>{if(e.key==='Enter')visualise();});
 
 // ================================================================
 // NOTIFY MODAL
 // ================================================================
-const notifyModal      = document.getElementById('notifyModal');
-const notifyEmailInput = document.getElementById('notifyEmail');
-const notifySuccessDiv = document.getElementById('notifySuccess');
-const notifySubmitBtn  = document.getElementById('notifySubmit');
-
-document.getElementById('proNotifyBtn').onclick = ()=> notifyModal.classList.add('open');
-document.getElementById('notifyClose').onclick  = ()=> notifyModal.classList.remove('open');
-notifyModal.onclick = e=>{ if(e.target===notifyModal) notifyModal.classList.remove('open'); };
-notifySubmitBtn.onclick = ()=>{
-    const email = notifyEmailInput.value.trim();
-    if(!email||!email.includes('@')){ notifyEmailInput.focus(); return; }
-    notifySuccessDiv.style.display='block';
-    notifyEmailInput.style.display='none';
-    notifySubmitBtn.style.display='none';
-    console.log('Pro notify email:',email);
-};
+const nm=document.getElementById('notifyModal'),nei=document.getElementById('notifyEmail'),nsd=document.getElementById('notifySuccess'),nsb=document.getElementById('notifySubmit');
+document.getElementById('proNotifyBtn').onclick=()=>nm.classList.add('open');
+document.getElementById('notifyClose').onclick=()=>nm.classList.remove('open');
+nm.onclick=e=>{if(e.target===nm)nm.classList.remove('open');};
+nsb.onclick=()=>{const email=nei.value.trim();if(!email||!email.includes('@')){nei.focus();return;}nsd.style.display='block';nei.style.display='none';nsb.style.display='none';};
 </script>
 </body>
 </html>
