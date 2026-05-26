@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>SkyWeb – 3D Visual Search</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-base:       #070b12;
+            --bg-card:       #0c1220;
+            --bg-card2:      #0f1828;
+            --border:        rgba(0,180,255,0.18);
+            --border-bright: rgba(0,200,255,0.5);
+            --blue-neon:     #00b4ff;
+            --cyan-neon:     #00e5ff;
+            --text-main:     #c8dff0;
+            --text-dim:      #5a7a95;
+            --glow:          0 0 25px rgba(0,180,255,0.5), 0 0 50px rgba(0,180,255,0.2);
+            --gold:          #ffd700;
+            --gold-glow:     0 0 20px rgba(255,215,0,0.4);
+        }
+
+        [data-theme="light"] {
+            --bg-base:   #e8f4ff;
+            --bg-card:   #ffffff;
+            --bg-card2:  #f0f8ff;
+            --border:    rgba(0,119,255,0.25);
+            --text-main: #0a1f33;
+            --text-dim:  #4a5f73;
+            --glow:      0 0 15px rgba(0,119,255,0.3);
+        }
+
+        body {
+            background: var(--bg-base);
+            color: var(--text-main);
+            font-family: 'Exo 2', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        #wireCanvas {
+            position: fixed; inset: 0;
+            width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
+        }
+
+        .orbs { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+        .orb  { position: absolute; border-radius: 50%; filter: blur(50px); opacity: 0.25; }
+        .orb1 { width:130px; height:130px; background:#00e5ff; top:20%; left:10%; }
+        .orb2 { width:110px; height:110px; background:#00b4ff; bottom:20%; right:10%; }
+        .orb3 { width:100px; height:100px; background:#00ffaa; top:60%; left:80%; }
+
+        .page {
+            position: relative; z-index: 1;
+            min-height: 100vh;
+            padding: 48px 20px 60px;
+            display: flex; flex-direction: column;
+            align-items: center; gap: 28px;
+        }
+
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; z-index: 100;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 50px; width: 48px; height: 48px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 1.4rem;
+            backdrop-filter: blur(8px);
+            transition: all 0.2s; box-shadow: var(--glow);
+        }
+        .theme-toggle:hover { transform: scale(1.05); border-color: var(--cyan-neon); }
+
+        .logo-block {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 6px;
+            margin-top: 20px; position: relative;
+        }
+        .logo-globe {
+            position: absolute; width: 170px; height: 170px;
+            top: -30px; perspective: 800px; z-index: 0;
+        }
+        .globe-sphere {
+            width: 100%; height: 100%;
+            position: relative; transform-style: preserve-3d;
+            animation: rotateGlobe 18s linear infinite;
+        }
+        .globe-ring {
+            position: absolute; width: 100%; height: 100%;
+            border: 2px solid var(--cyan-neon); border-radius: 50%;
+            box-shadow: 0 0 18px var(--cyan-neon); opacity: 0.75;
+        }
+        .ring-1 { transform: rotateX(0deg); }
+        .ring-2 { transform: rotateX(60deg); }
+        .ring-3 { transform: rotateX(120deg); }
+        .ring-4 { transform: rotateY(90deg); }
+        .globe-crack {
+            position: absolute; width: 100%; height: 100%;
+            border: 2px dashed #ff4466; border-radius: 50%;
+            opacity: 0.7; transform: rotateX(30deg) rotateZ(45deg);
+        }
+        @keyframes rotateGlobe {
+            from { transform: rotateY(0deg) rotateX(15deg); }
+            to   { transform: rotateY(360deg) rotateX(15deg); }
+        }
+        .logo-content {
+            position: relative; z-index: 2;
+            display: flex; flex-direction: column;
+            align-items: center; gap: 6px;
+        }
+        .logo-s {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.8rem; font-weight: 900; color: var(--cyan-neon);
+            text-shadow: 0 0 40px var(--cyan-neon), 0 0 80px rgba(0,229,255,0.3);
+            line-height: 1;
+        }
+        .logo-name-row {
+            display: flex; align-items: center; gap: 5px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.7rem; font-weight: 800; letter-spacing: 0.2em;
+        }
+        .logo-bracket  { color: var(--blue-neon); opacity: 0.6; }
+        .logo-wordmark { color: var(--text-main); }
+        .logo-sub {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.62rem; letter-spacing: 0.35em; color: var(--text-dim);
+        }
+        .logo-tagline {
+            font-size: 0.78rem; letter-spacing: 0.18em;
+            color: var(--blue-neon); opacity: 0.75;
+        }
+
+        .search-card {
+            width: 100%; max-width: 600px;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 10px; padding: 20px;
+            display: flex; flex-direction: column; gap: 12px;
+            box-shadow: var(--glow); position: relative;
+        }
+        .search-card::after {
+            content: ''; position: absolute;
+            bottom: -2px; left: 10%; width: 80%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--cyan-neon), transparent);
+            box-shadow: 0 0 12px var(--cyan-neon);
+        }
+        .search-input {
+            width: 100%; padding: 14px 18px;
+            background: rgba(0,10,25,0.8);
+            border: 1px solid var(--border); border-radius: 6px;
+            color: #e8f4ff; font-family: 'Exo 2', sans-serif;
+            font-size: 1rem; outline: none;
+        }
+        [data-theme="light"] .search-input { background: #f0f8ff; color: #0a1f33; }
+        .search-input::placeholder { color: var(--text-dim); }
+        .search-input:focus {
+            border-color: var(--cyan-neon);
+            box-shadow: 0 0 14px rgba(0,229,255,0.35);
+        }
+        .visualise-btn {
+            width: 100%; padding: 14px;
+            background: transparent; border: 1.5px solid var(--blue-neon);
+            border-radius: 6px; color: var(--blue-neon);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem; font-weight: 700;
+            letter-spacing: 0.25em; cursor: pointer;
+            transition: all 0.2s; text-transform: uppercase;
+        }
+        .visualise-btn:hover { background: var(--blue-neon); color: #000; box-shadow: var(--glow); }
+        .lucky-btn {
+            width: 100%; padding: 12px; background: transparent;
+            border: 1px solid rgba(0,180,255,0.3); border-radius: 6px;
+            color: var(--text-dim); font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem; letter-spacing: 0.15em;
+            cursor: pointer; margin-top: 8px; transition: all 0.2s;
+        }
+        .lucky-btn:hover { border-color: var(--blue-neon); color: var(--blue-neon); }
+
+        .result-area {
+            width: 100%; max-width: 700px;
+            display: none; flex-direction: column; gap: 14px;
+        }
+        .result-area.visible { display: flex; }
+
+        .flip-wrapper { perspective: 1400px; width: 100%; height: 480px; }
+        .flip-card {
+            width: 100%; height: 100%; position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.65s cubic-bezier(0.45,0.05,0.55,0.95);
+        }
+        .flip-card.flipped { transform: rotateY(180deg); }
+        .flip-front, .flip-back {
+            position: absolute; inset: 0; backface-visibility: hidden;
+            border-radius: 12px; overflow: hidden;
+            border: 1px solid var(--border); background: var(--bg-card2);
+        }
+        .flip-back {
+            transform: rotateY(180deg);
+            padding: 28px; overflow-y: auto;
+        }
+        .flip-back::-webkit-scrollbar { width: 4px; }
+        .flip-back::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 4px; }
+
+        .visual {
+            width: 100%; height: 100%; background: #080e1a;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; position: relative;
+        }
+        .visual canvas { width: 100% !important; height: 100% !important; }
+
+        .model-label {
+            position: absolute; top: 14px; left: 14px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.6rem; letter-spacing: 0.2em; color: var(--cyan-neon);
+            background: rgba(0,10,25,0.75); border: 1px solid var(--border-bright);
+            padding: 4px 10px; border-radius: 20px; backdrop-filter: blur(4px);
+        }
+        .viewer-controls {
+            position: absolute; bottom: 12px; right: 12px;
+            display: flex; gap: 8px; z-index: 10;
+        }
+        .layer-btn {
+            background: rgba(10,14,23,0.9); border: 1px solid var(--cyan-neon);
+            border-radius: 6px; color: var(--cyan-neon);
+            padding: 5px 12px; font-size: 11px;
+            cursor: pointer; font-family: 'Exo 2', sans-serif; transition: all 0.2s;
+        }
+        .layer-btn:hover { background: rgba(0,229,255,0.15); }
+
+        .loading-state {
+            display: flex; flex-direction: column; align-items: center; gap: 16px;
+            color: var(--text-dim); font-size: 0.8rem; font-family: 'Orbitron', sans-serif;
+        }
+        .spinner {
+            width: 38px; height: 38px; border: 2px solid var(--border);
+            border-top-color: var(--blue-neon); border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .ai-answer-text { line-height: 1.85; font-size: 0.95rem; color: var(--text-main); }
+        .ai-answer-text p { margin-bottom: 14px; }
+
+        .flip-label {
+            position: absolute; bottom: 10px; left: 14px;
+            font-size: 0.65rem; letter-spacing: 0.12em;
+            color: var(--text-dim); font-family: 'Orbitron', sans-serif;
+            pointer-events: none; z-index: 2;
+        }
+        .flip-toggle {
+            width: 100%; padding: 12px; background: transparent;
+            border: 1px solid rgba(0,180,255,0.3); border-radius: 6px;
+            color: var(--text-dim); font-family: 'Orbitron', sans-serif;
+            font-size: 0.68rem; letter-spacing: 0.15em; cursor: pointer; transition: all 0.2s;
+        }
+        .flip-toggle:hover { border-color: var(--blue-neon); color: var(--blue-neon); background: rgba(0,180,255,0.07); }
+
+        .pro-banner {
+            width: 100%; max-width: 600px;
+            background: linear-gradient(135deg, rgba(255,215,0,0.06), rgba(0,180,255,0.06));
+            border: 1px solid rgba(255,215,0,0.3); border-radius: 12px;
+            padding: 24px 28px; display: flex; flex-direction: column;
+            gap: 12px; position: relative; overflow: hidden;
+        }
+        .pro-banner::before {
+            content: 'COMING SOON'; position: absolute; top: 12px; right: 18px;
+            font-family: 'Orbitron', sans-serif; font-size: 0.55rem;
+            letter-spacing: 0.2em; color: var(--gold); opacity: 0.8;
+        }
+        .pro-banner-title {
+            font-family: 'Orbitron', sans-serif; font-size: 1.2rem;
+            font-weight: 800; color: var(--gold); text-shadow: var(--gold-glow);
+        }
+        .pro-features { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+        .pro-feature { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; color: var(--text-main); opacity: 0.9; }
+        .pro-feature-icon { color: var(--gold); font-size: 1rem; }
+        .pro-notify-btn {
+            width: 100%; padding: 12px; background: transparent;
+            border: 1px solid rgba(255,215,0,0.4); border-radius: 6px;
+            color: var(--gold); font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem; letter-spacing: 0.15em;
+            cursor: pointer; margin-top: 8px; transition: all 0.2s;
+        }
+        .pro-notify-btn:hover { background: rgba(255,215,0,0.1); box-shadow: var(--gold-glow); }
+
+        .demo-unlock {
+            width: 100%; max-width: 600px; margin-top: 8px; padding: 10px;
+            background: transparent; border: 1px dashed rgba(0,180,255,0.3);
+            border-radius: 6px; color: var(--text-dim); font-family: 'Exo 2', sans-serif;
+            font-size: 0.7rem; cursor: pointer; transition: all 0.2s;
+        }
+        .demo-unlock:hover { border-color: var(--cyan-neon); color: var(--cyan-neon); }
+
+        .footer {
+            width: 100%; max-width: 640px; text-align: center;
+            padding-top: 20px; border-top: 1px solid var(--border);
+            font-size: 0.72rem; color: var(--text-dim);
+        }
+        .footer span { color: var(--blue-neon); }
+
+        .modal-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.8); z-index: 1000;
+            align-items: center; justify-content: center;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal {
+            background: var(--bg-card); border: 1px solid var(--gold);
+            border-radius: 14px; padding: 32px;
+            max-width: 360px; width: 90%; text-align: center; position: relative;
+        }
+        .modal-close {
+            position: absolute; top: 12px; right: 16px;
+            background: none; border: none; color: var(--text-dim); font-size: 1.2rem; cursor: pointer;
+        }
+        .modal-icon { font-size: 2rem; margin-bottom: 10px; }
+        .modal-title {
+            font-family: 'Orbitron', sans-serif; font-size: 0.9rem;
+            letter-spacing: 0.15em; color: var(--gold); margin-bottom: 16px;
+        }
+        .notify-form { display: flex; flex-direction: column; gap: 12px; margin-top: 14px; }
+        .notify-input {
+            width: 100%; padding: 12px; background: rgba(0,10,25,0.8);
+            border: 1px solid var(--border); border-radius: 6px; color: white; outline: none;
+        }
+        .notify-submit {
+            width: 100%; padding: 12px; background: rgba(255,215,0,0.1);
+            border: 1px solid rgba(255,215,0,0.4); border-radius: 6px;
+            color: var(--gold); font-family: 'Orbitron', sans-serif; cursor: pointer;
+        }
+        .notify-success { color: #00ffaa; display: none; margin-top: 8px; font-size: 0.8rem; }
+
+        .no-visual-msg {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; height: 100%; color: #5a7a95;
+            font-size: 14px; text-align: center; padding: 20px; gap: 12px;
+        }
+        .no-visual-msg span { color: #00e5ff; }
+
+        @media (max-width: 550px) {
+            .logo-s        { font-size: 2.8rem; }
+            .logo-name-row { font-size: 1.3rem; }
+            .pro-features  { grid-template-columns: 1fr; }
+            .flip-wrapper  { height: 380px; }
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="wireCanvas"></canvas>
+<div class="orbs">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+</div>
+
+<div class="theme-toggle" id="themeToggle">🌞</div>
+
+<div class="page">
+    <div class="logo-block">
+        <div class="logo-globe">
+            <div class="globe-sphere">
+                <div class="globe-ring ring-1"></div>
+                <div class="globe-ring ring-2"></div>
+                <div class="globe-ring ring-3"></div>
+                <div class="globe-ring ring-4"></div>
+                <div class="globe-crack"></div>
+            </div>
+        </div>
+        <div class="logo-content">
+            <div class="logo-s">S</div>
+            <div class="logo-name-row">
+                <span class="logo-bracket">[</span>
+                <span class="logo-wordmark">SKYWEB</span>
+                <span class="logo-bracket">]</span>
+            </div>
+            <div class="logo-sub">WEBDEVS</div>
+            <div class="logo-tagline">SEARCH TO UNDERSTAND</div>
+        </div>
+    </div>
+
+    <div class="search-card">
+        <input id="searchInput" class="search-input" type="text"
+               placeholder="heart, brain, lungs, kidney, DNA, eye, neuron..." />
+        <button class="visualise-btn" id="visualiseBtn">◈ VISUALISE ◈</button>
+        <button class="lucky-btn" id="luckyBtn">✨ I'M FEELING CURIOUS</button>
+    </div>
+
+    <div class="result-area" id="resultArea">
+        <div class="flip-wrapper">
+            <div class="flip-card" id="flipCard">
+                <div class="flip-front">
+                    <div class="visual" id="visualContainer"></div>
+                    <div class="flip-label">🔮 3D VISUALISATION</div>
+                </div>
+                <div class="flip-back">
+                    <div id="aiAnswer" class="ai-answer-text"></div>
+                    <div class="flip-label">📖 EXPLANATION</div>
+                </div>
+            </div>
+        </div>
+        <button class="flip-toggle" id="flipToggle">🔄 FLIP — VIEW EXPLANATION</button>
+    </div>
+
+    <div class="pro-banner">
+        <div class="pro-banner-title">⭐ SKYWEB PRO</div>
+        <div style="font-size:0.8rem;color:var(--text-dim);line-height:1.6;">
+            Unlock richer diagrams, faster answers, and more — coming soon.
+        </div>
+        <div class="pro-features">
+            <div class="pro-feature"><span class="pro-feature-icon">🎨</span> HD AI Diagrams</div>
+            <div class="pro-feature"><span class="pro-feature-icon">⚡</span> Priority Speed</div>
+            <div class="pro-feature"><span class="pro-feature-icon">📚</span> Search History</div>
+            <div class="pro-feature"><span class="pro-feature-icon">🌍</span> Offline Mode</div>
+            <div class="pro-feature"><span class="pro-feature-icon">🔬</span> Deep Research</div>
+            <div class="pro-feature"><span class="pro-feature-icon">📤</span> Export Diagrams</div>
+        </div>
+        <button class="pro-notify-btn" id="proNotifyBtn">🔔 NOTIFY ME WHEN PRO LAUNCHES</button>
+    </div>
+
+    <button class="demo-unlock" id="demoUnlockBtn">⚡ Unlock Pro (Demo Mode)</button>
+
+    <div class="footer">
+        <span>SKYWEB</span> by WEBDEVS · Ghana 🇬🇭 · Built to make knowledge free for the world<br/>
+        © 2025 SkyWeb · All rights reserved
+    </div>
+</div>
+
+<div class="modal-overlay" id="notifyModal">
+    <div class="modal">
+        <button class="modal-close" id="notifyClose">✕</button>
+        <div class="modal-icon">⭐</div>
+        <div class="modal-title">SKYWEB PRO — NOTIFY ME</div>
+        <div style="font-size:0.8rem;color:var(--text-dim);line-height:1.6;">
+            Be first to know when SkyWeb Pro launches.
+        </div>
+        <div class="notify-form">
+            <input class="notify-input" id="notifyEmail" type="email" placeholder="your@email.com"/>
+            <button class="notify-submit" id="notifySubmit">🔔 NOTIFY ME AT LAUNCH</button>
+            <div class="notify-success" id="notifySuccess">
+                ✅ You're on the list! We'll reach out when Pro launches.
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ================================================================
+// WIRE BACKGROUND
+// ================================================================
+(function(){
+    const canvas=document.getElementById('wireCanvas'),ctx=canvas.getContext('2d');
+    let nodes=[],pulses=[];
+    function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+    resize(); window.addEventListener('resize',resize);
+    for(let i=0;i<40;i++) nodes.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3});
+    setInterval(()=>{const a=Math.floor(Math.random()*nodes.length),b=Math.floor(Math.random()*nodes.length);if(a!==b)pulses.push({from:a,to:b,progress:0,speed:0.008+Math.random()*0.012});},300);
+    function draw(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        nodes.forEach(n=>{n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>canvas.width)n.vx*=-1;if(n.y<0||n.y>canvas.height)n.vy*=-1;});
+        for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y;if(Math.sqrt(dx*dx+dy*dy)<200){ctx.beginPath();ctx.strokeStyle='rgba(0,180,255,0.2)';ctx.lineWidth=1.5;ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);ctx.stroke();}}
+        nodes.forEach(n=>{ctx.beginPath();ctx.arc(n.x,n.y,2,0,Math.PI*2);ctx.fillStyle='rgba(0,229,255,0.4)';ctx.fill();});
+        pulses=pulses.filter(p=>{p.progress+=p.speed;if(p.progress>1)return false;const px=nodes[p.from].x+(nodes[p.to].x-nodes[p.from].x)*p.progress,py=nodes[p.from].y+(nodes[p.to].y-nodes[p.from].y)*p.progress;ctx.beginPath();ctx.arc(px,py,4,0,Math.PI*2);ctx.fillStyle='#00e5ff';ctx.fill();return true;});
+        requestAnimationFrame(draw);
+    }
+    draw();
+})();
+
+// ================================================================
+// THEME
+// ================================================================
+document.getElementById('themeToggle').addEventListener('click',()=>{
+    const isLight=document.documentElement.getAttribute('data-theme')==='light';
+    if(isLight){document.documentElement.removeAttribute('data-theme');document.getElementById('themeToggle').textContent='🌞';}
+    else{document.documentElement.setAttribute('data-theme','light');document.getElementById('themeToggle').textContent='🌙';}
+});
+
+// ================================================================
+// PRO DEMO
+// ================================================================
+let isPro=false;
+document.getElementById('demoUnlockBtn').addEventListener('click',()=>{isPro=true;alert('⭐ Pro features unlocked for this session.');});
+
+// ================================================================
+// THREE.JS ENGINE
+// ================================================================
+let threeRenderer=null,threeScene=null,threeCamera=null,threeAnim=null;
+function destroyThree(){if(threeAnim){cancelAnimationFrame(threeAnim);threeAnim=null;}if(threeRenderer){threeRenderer.dispose();threeRenderer=null;}threeScene=null;threeCamera=null;}
+function initThree(container){
+    destroyThree();
+    const w=container.clientWidth||600,h=container.clientHeight||480;
+    threeRenderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+    threeRenderer.setSize(w,h);threeRenderer.setPixelRatio(window.devicePixelRatio);threeRenderer.setClearColor(0x080e1a,1);
+    container.appendChild(threeRenderer.domElement);
+    threeScene=new THREE.Scene();threeCamera=new THREE.PerspectiveCamera(60,w/h,0.1,1000);threeCamera.position.set(0,0,4);
+    threeScene.add(new THREE.AmbientLight(0x224466,1.2));
+    const d1=new THREE.DirectionalLight(0x00e5ff,2);d1.position.set(5,5,5);threeScene.add(d1);
+    const d2=new THREE.DirectionalLight(0xff4488,1);d2.position.set(-5,-3,2);threeScene.add(d2);
+    let isDragging=false,prevMouse={x:0,y:0};
+    threeRenderer.domElement.addEventListener('mousedown',e=>{isDragging=true;prevMouse={x:e.clientX,y:e.clientY};});
+    window.addEventListener('mouseup',()=>isDragging=false);
+    window.addEventListener('mousemove',e=>{if(!isDragging||!threeScene.userData.pivot)return;threeScene.userData.pivot.rotation.y+=(e.clientX-prevMouse.x)*0.01;threeScene.userData.pivot.rotation.x+=(e.clientY-prevMouse.y)*0.01;prevMouse={x:e.clientX,y:e.clientY};});
+    threeRenderer.domElement.addEventListener('touchstart',e=>{isDragging=true;prevMouse={x:e.touches[0].clientX,y:e.touches[0].clientY};});
+    threeRenderer.domElement.addEventListener('touchend',()=>isDragging=false);
+    threeRenderer.domElement.addEventListener('touchmove',e=>{if(!isDragging||!threeScene.userData.pivot)return;threeScene.userData.pivot.rotation.y+=(e.touches[0].clientX-prevMouse.x)*0.01;threeScene.userData.pivot.rotation.x+=(e.touches[0].clientY-prevMouse.y)*0.01;prevMouse={x:e.touches[0].clientX,y:e.touches[0].clientY};e.preventDefault();},{passive:false});
+}
+function startLoop(onFrame){function loop(){threeAnim=requestAnimationFrame(loop);onFrame();threeRenderer.render(threeScene,threeCamera);}loop();}
+function makeParticles(count,spread,color){const g=new THREE.BufferGeometry(),p=new Float32Array(count*3);for(let i=0;i<count;i++){p[i*3]=(Math.random()-0.5)*spread;p[i*3+1]=(Math.random()-0.5)*spread;p[i*3+2]=(Math.random()-0.5)*spread;}g.setAttribute('position',new THREE.BufferAttribute(p,3));return new THREE.Points(g,new THREE.PointsMaterial({color,size:0.05,transparent:true,opacity:0.6}));}
+
+// ================================================================
+// 3D MODELS
+// ================================================================
+function buildHeart(c){
+    initThree(c);const piv=new THREE.Group();threeScene.userData.pivot=piv;threeScene.add(piv);
+    const m=new THREE.MeshPhongMaterial({color:0xcc2244,emissive:0x550011,shininess:80,transparent:true,opacity:0.92});
+    const wm=new THREE.MeshBasicMaterial({color:0xff4466,wireframe:true,transparent:true,opacity:0.15});
+    const lg=new THREE.SphereGeometry(0.7,32,32);
+    [[-0.45,0.35,0],[0.45,0.35,0]].forEach(([x,y,z])=>{piv.add(Object.assign(new THREE.Mesh(lg,m),{position:new THREE.Vector3(x,y,z)}));piv.add(Object.assign(new THREE.Mesh(lg,wm),{position:new THREE.Vector3(x,y,z)}));});
+    const cg=new THREE.ConeGeometry(0.85,1.6,32);const cone=new THREE.Mesh(cg,m);cone.position.set(0,-0.4,0);cone.rotation.z=Math.PI;piv.add(cone);piv.add(Object.assign(new THREE.Mesh(cg,wm),{position:cone.position,rotation:cone.rotation}));
+    piv.add(Object.assign(new THREE.Mesh(new THREE.SphereGeometry(0.65,32,32),m),{position:new THREE.Vector3(0,0.1,0)}));
+    const tm=new THREE.MeshPhongMaterial({color:0xff2255,emissive:0x330011});
+    [[-0.3,1.05,0,0,0,0.3,0.6],[0.3,1.05,0,0,0,-0.3,0.6],[0,1.3,0,0,0,0,0.5]].forEach(([x,y,z,rx,ry,rz,h])=>{const t=new THREE.Mesh(new THREE.CylinderGeometry(0.12,0.12,h,16),tm);t.position.set(x,y,z);t.rotation.set(rx,ry,rz);piv.add(t);});
+    const gm=new THREE.MeshBasicMaterial({color:0xff2244,transparent:true,opacity:0.08,side:THREE.BackSide});const glow=new THREE.Mesh(new THREE.SphereGeometry(1.05,32,32),gm);piv.add(glow);
+    const pts=makeParticles(120,4,0xff4466);threeScene.add(pts);
+    let t=0;startLoop(()=>{t+=0.03;piv.rotation.y+=0.005;const b=1+0.08*Math.abs(Math.sin(t*2));piv.scale.set(b,b,b);gm.opacity=0.05+0.06*Math.abs(Math.sin(t*2));pts.rotation.y+=0.002;});
+}
+
+function buildBrain(c){
+    initThree(c);const piv=new THREE.Group();threeScene.userData.pivot=piv;threeScene.add(piv);
+    const bm=new THREE.MeshPhongMaterial({color:0xffaacc,emissive:0x441122,shininess:40});
+    const hg=new THREE.SphereGeometry(1,32,32,0,Math.PI);
+    const hl=new THREE.Mesh(hg,bm);hl.rotation.y=Math.PI;piv.add(hl);piv.add(new THREE.Mesh(hg,bm));
+    const bumpMat=new THREE.MeshPhongMaterial({color:0xff99bb,emissive:0x330011,shininess:30});
+    [[-0.6,0.7,0.5],[0.6,0.7,0.5],[0,0.9,0.2],[-0.4,0.5,0.8],[0.4,0.5,0.8],[-0.8,0.2,0.3],[0.8,0.2,0.3],[-0.3,-0.1,0.9],[0.3,-0.1,0.9],[0,0.2,1.0],[-0.7,0.4,-0.4],[0.7,0.4,-0.4],[-0.5,-0.3,0.5],[0.5,-0.3,0.5],[0,-0.2,0.6]].forEach(([x,y,z])=>{const b=new THREE.Mesh(new THREE.SphereGeometry(0.22+Math.random()*0.15,16,16),bumpMat);b.position.set(x,y,z);piv.add(b);});
+    const st=new THREE.Mesh(new THREE.CylinderGeometry(0.18,0.22,0.7,16),new THREE.MeshPhongMaterial({color:0xee88aa,emissive:0x220011}));st.position.set(0,-0.95,0);piv.add(st);
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(1.2,32,32),new THREE.MeshBasicMaterial({color:0xff88cc,transparent:true,opacity:0.06,side:THREE.BackSide})));
+    const pts=makeParticles(180,4,0xffbbdd);threeScene.add(pts);
+    startLoop(()=>{piv.rotation.y+=0.004;piv.rotation.x=Math.sin(Date.now()*0.0005)*0.1;pts.rotation.y+=0.001;});
+}
+
+function buildLungs(c){
+    initThree(c);const piv=new THREE.Group();threeScene.userData.pivot=piv;threeScene.add(piv);
+    const lm=new THREE.MeshPhongMaterial({color:0xff7733,emissive:0x441100,shininess:50,transparent:true,opacity:0.9});
+    const tm=new THREE.MeshPhongMaterial({color:0xffaa55,emissive:0x331100});
+    function mkLung(side){const g=new THREE.Group();
+        [[0.7,1.2,0.7,side*0.72,0,0],[0.45,1,0.8,side*0.68,0.75,0],[0.5,0.85,0.85,side*0.7,-0.72,0]].forEach(([rx,ry,rz,x,y,z],i)=>{const sg=new THREE.SphereGeometry(i===0?0.7:i===1?0.45:0.5,32,32);sg.scale(rx,ry,rz);const m=new THREE.Mesh(sg,lm);m.position.set(x,y,z);g.add(m);});
+        for(let i=0;i<4;i++){const b=new THREE.Mesh(new THREE.CylinderGeometry(0.04,0.04,0.45,8),tm);b.position.set(side*0.5,0.3-i*0.25,0.1);b.rotation.z=side*(0.4+i*0.15);b.rotation.x=0.2;g.add(b);}
+        piv.add(g);
+    }
+    mkLung(-1);mkLung(1);
+    const tr=new THREE.Mesh(new THREE.CylinderGeometry(0.12,0.12,1.2,16),tm);tr.position.set(0,0.9,0);piv.add(tr);
+    for(let i=0;i<6;i++){const r=new THREE.Mesh(new THREE.TorusGeometry(0.13,0.025,8,16),new THREE.MeshPhongMaterial({color:0xffcc88}));r.position.set(0,0.4+i*0.18,0);r.rotation.x=Math.PI/2;piv.add(r);}
+    const gm=new THREE.MeshBasicMaterial({color:0xff8844,transparent:true,opacity:0.05,side:THREE.BackSide});const glow=new THREE.Mesh(new THREE.SphereGeometry(1.4,32,32),gm);threeScene.add(glow);
+    const pts=makeParticles(150,4,0x88ddff);threeScene.add(pts);
+    let t=0;startLoop(()=>{t+=0.02;piv.rotation.y+=0.004;const b=1+0.07*Math.sin(t*0.8);piv.scale.set(b,b*0.95,b);gm.opacity=0.03+0.04*Math.sin(t*0.8);pts.rotation.y+=0.002;});
+}
+
+function buildKidney(c){
+    initThree(c);const piv=new THREE.Group();threeScene.userData.pivot=piv;threeScene.add(piv);
+    const mat=new THREE.MeshPhongMaterial({color:0xcc4422,emissive:0x440f00,shininess:60});
+    const imat=new THREE.MeshPhongMaterial({color:0xff8855,emissive:0x330800,shininess:40,transparent:true,opacity:0.85});
+    const tmat=new THREE.MeshPhongMaterial({color:0xffaa66,emissive:0x221100});
+    function mkK(side){const g=new THREE.Group();
+        const og=new THREE.SphereGeometry(0.65,32,32);og.scale(0.75,1,0.55);const o=new THREE.Mesh(og,mat);o.position.set(side*0.85,0,0);if(side===1)o.scale.x=-1;g.add(o);
+        const ig=new THREE.SphereGeometry(0.38,24,24);ig.scale(0.7,0.9,0.5);const inn=new THREE.Mesh(ig,imat);inn.position.set(side*0.85,0,0.05);if(side===1)inn.scale.x=-1;g.add(inn);
+        const u=new THREE.Mesh(new THREE.CylinderGeometry(0.05,0.05,0.8,8),tmat);u.position.set(side*0.5,-0.75,0);u.rotation.z=side*0.3;g.add(u);
+        piv.add(g);
+    }
+    mkK(-1);mkK(1);
+    const art=new THREE.Mesh(new THREE.CylinderGeometry(0.06,0.06,1.0,8),new THREE.MeshPhongMaterial({color:0xff3333,emissive:0x220000}));art.position.set(0,0.2,0);art.rotation.z=Math.PI/2;piv.add(art);
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(1.5,32,32),new THREE.MeshBasicMaterial({color:0xff6633,transparent:true,opacity:0.06,side:THREE.BackSide})));
+    const pts=makeParticles(120,4,0xffbb88);threeScene.add(pts);
+    startLoop(()=>{piv.rotation.y+=0.005;piv.rotation.x=Math.sin(Date.now()*0.0004)*0.08;pts.rotation.y+=0.002;});
+}
+
+function buildDNA(c){
+    initThree(c);threeCamera.position.set(0,0,6);const piv=new THREE.Group();threeScene.userData.pivot=piv;threeScene.add(piv);
+    const m1=new THREE.MeshPhongMaterial({color:0x00e5ff,emissive:0x003344,shininess:100});
+    const m2=new THREE.MeshPhongMaterial({color:0xff4488,emissive:0x330011,shininess:100});
+    const rm=[new THREE.MeshPhongMaterial({color:0xffdd44,emissive:0x332200,shininess:80}),new THREE.MeshPhongMaterial({color:0x44ff88,emissive:0x003311,shininess:80})];
+    const TURNS=5,PPT=18,TOTAL=TURNS*PPT,R=0.8,H=5;
+    for(let i=0;i<TOTAL;i++){const t=i/TOTAL,a=t*TURNS*Math.PI*2,y=t*H-H/2;
+        const s1=new THREE.Mesh(new THREE.SphereGeometry(0.1,16,16),m1);s1.position.set(Math.cos(a)*R,y,Math.sin(a)*R);piv.add(s1);
+        const s2=new THREE.Mesh(new THREE.SphereGeometry(0.1,16,16),m2);s2.position.set(Math.cos(a+Math.PI)*R,y,Math.sin(a+Math.PI)*R);piv.add(s2);
+        if(i%3===0){const x1=Math.cos(a)*R,z1=Math.sin(a)*R,x2=Math.cos(a+Math.PI)*R,z2=Math.sin(a+Math.PI)*R,len=Math.sqrt((x2-x1)**2+(z2-z1)**2);
+            const rg=new THREE.CylinderGeometry(0.04,0.04,len,8),rm2=new THREE.Mesh(rg,rm[i%2]);rm2.position.set((x1+x2)/2,y,(z1+z2)/2);rm2.rotation.z=Math.PI/2;rm2.rotation.y=-Math.atan2(z2-z1,x2-x1);piv.add(rm2);}
+    }
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(2,32,32),new THREE.MeshBasicMaterial({color:0x00e5ff,transparent:true,opacity:0.04,side:THREE.BackSide})));
+    const pts=makeParticles(200,6,0x00e5ff);threeScene.add(pts);
+    startLoop(()=>{piv.rotation.y+=0.006;pts.rotation.y+=0.001;});
+}
+
+function buildNeuron(c){
+    initThree(c);threeCamera.position.set(0,0,6);const piv=new THREE.Group();threeScene.userData.pivot=piv;threeScene.add(piv);
+    const sm=new THREE.MeshPhongMaterial({color:0xffcc44,emissive:0x332200,shininess:80});
+    const dm=new THREE.MeshPhongMaterial({color:0xff8822,emissive:0x221100,shininess:40});
+    const am=new THREE.MeshPhongMaterial({color:0x44ccff,emissive:0x001133,shininess:90});
+    const mm=new THREE.MeshPhongMaterial({color:0xffffff,emissive:0x111111,transparent:true,opacity:0.7,shininess:120});
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(0.5,32,32),sm));
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(0.22,16,16),new THREE.MeshPhongMaterial({color:0xff4444,emissive:0x220000})));
+    [[0.8,0.6,0.2,0,0,0.4,1.0],[-0.9,0.5,0.1,0,0,-0.3,1.1],[0.3,0.9,-0.2,0.3,0,0,1.0],[-0.4,0.8,0.4,-0.2,0,0.3,0.9],[0.7,-0.5,0.3,0,0,0.3,0.8],[-0.6,-0.6,-0.2,0,0,-0.2,0.9]].forEach(([x,y,z,rx,ry,rz,len])=>{const d=new THREE.Mesh(new THREE.CylinderGeometry(0.04,0.02,len,8),dm);d.position.set(x,y,z);d.rotation.set(rx,ry,rz);piv.add(d);});
+    const ax=new THREE.Mesh(new THREE.CylinderGeometry(0.06,0.06,3,16),am);ax.position.set(0,-2,0);piv.add(ax);
+    for(let i=0;i<5;i++){const ms=new THREE.Mesh(new THREE.CylinderGeometry(0.12,0.12,0.35,16),mm);ms.position.set(0,-0.7-i*0.52,0);piv.add(ms);}
+    for(let i=0;i<4;i++){const a=i*(Math.PI/2),t=new THREE.Mesh(new THREE.SphereGeometry(0.1,12,12),new THREE.MeshPhongMaterial({color:0x00ffaa,emissive:0x003311}));t.position.set(Math.cos(a)*0.3,-3.55,Math.sin(a)*0.3);piv.add(t);}
+    const sigs=[];for(let i=0;i<6;i++){const sp=new THREE.Mesh(new THREE.SphereGeometry(0.08,8,8),new THREE.MeshBasicMaterial({color:0xffff00}));sp.userData.phase=i*(Math.PI*2/6);piv.add(sp);sigs.push(sp);}
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(1.5,32,32),new THREE.MeshBasicMaterial({color:0xffcc44,transparent:true,opacity:0.05,side:THREE.BackSide})));
+    const pts=makeParticles(150,6,0xffee88);threeScene.add(pts);
+    startLoop(()=>{piv.rotation.y+=0.004;const t=Date.now()*0.002;sigs.forEach(sp=>{const ph=sp.userData.phase,pr=(t+ph)%(Math.PI*2);sp.position.set(0,-0.5-(pr/(Math.PI*2))*3.0,0);});pts.rotation.y+=0.001;});
+}
+
+function buildEye(c){
+    initThree(c);const piv=new THREE.Group();threeScene.userData.pivot=piv;threeScene.add(piv);
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(1,32,32),new THREE.MeshPhongMaterial({color:0xffffff,emissive:0x111111,shininess:120})));
+    const ig=new THREE.CylinderGeometry(0.42,0.42,0.05,32);const iris=new THREE.Mesh(ig,new THREE.MeshPhongMaterial({color:0x1166ff,emissive:0x001133,shininess:80}));iris.position.set(0,0,0.96);iris.rotation.x=Math.PI/2;piv.add(iris);
+    const pupilG=new THREE.CylinderGeometry(0.2,0.2,0.06,32);const pupil=new THREE.Mesh(pupilG,new THREE.MeshPhongMaterial({color:0x000000,shininess:200}));pupil.position.set(0,0,0.97);pupil.rotation.x=Math.PI/2;piv.add(pupil);
+    const cg=new THREE.SphereGeometry(0.45,32,32,0,Math.PI*2,0,Math.PI/2.5);const corn=new THREE.Mesh(cg,new THREE.MeshPhongMaterial({color:0xaaddff,transparent:true,opacity:0.25,shininess:200}));corn.position.set(0,0,0.7);corn.rotation.x=-Math.PI/2;piv.add(corn);
+    const nv=new THREE.Mesh(new THREE.CylinderGeometry(0.15,0.1,1.2,16),new THREE.MeshPhongMaterial({color:0xffeeaa,emissive:0x221100}));nv.position.set(0,-0.3,-1.0);nv.rotation.x=Math.PI/6;piv.add(nv);
+    const vm=new THREE.MeshBasicMaterial({color:0xff3333});for(let i=0;i<8;i++){const a=i*(Math.PI/4),v=new THREE.Mesh(new THREE.CylinderGeometry(0.012,0.012,0.6,4),vm);v.position.set(Math.cos(a)*0.55,Math.sin(a)*0.55,0.78);v.rotation.z=-a;v.rotation.x=0.4;piv.add(v);}
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(1.2,32,32),new THREE.MeshBasicMaterial({color:0x4488ff,transparent:true,opacity:0.07,side:THREE.BackSide})));
+    const pts=makeParticles(120,5,0x88ccff);threeScene.add(pts);
+    let t=0;startLoop(()=>{t+=0.02;piv.rotation.y+=0.004;const d=0.18+0.06*Math.sin(t*0.4);pupil.scale.set(d/0.2,1,d/0.2);pts.rotation.y+=0.001;});
+}
+
+function buildStomach(c){
+    initThree(c);const piv=new THREE.Group();threeScene.userData.pivot=piv;threeScene.add(piv);
+    const mat=new THREE.MeshPhongMaterial({color:0xff9933,emissive:0x331100,shininess:50,transparent:true,opacity:0.92});
+    const tm=new THREE.MeshPhongMaterial({color:0xffbb55,emissive:0x221100});
+    const bg=new THREE.SphereGeometry(0.9,32,32);bg.scale(1,1.1,0.75);const body=new THREE.Mesh(bg,mat);piv.add(body);
+    const pg=new THREE.SphereGeometry(0.4,16,16);pg.scale(1.2,0.85,0.7);const pyl=new THREE.Mesh(pg,mat);pyl.position.set(0.9,-0.5,0);piv.add(pyl);
+    const ca=new THREE.Mesh(new THREE.CylinderGeometry(0.18,0.22,0.55,16),tm);ca.position.set(-0.35,0.9,0);ca.rotation.z=0.4;piv.add(ca);
+    const cn=new THREE.Mesh(new THREE.CylinderGeometry(0.13,0.13,0.5,16),tm);cn.position.set(1.3,-0.6,0);cn.rotation.z=Math.PI/2+0.3;piv.add(cn);
+    for(let i=0;i<6;i++){const r=new THREE.Mesh(new THREE.TorusGeometry(0.55,0.04,8,32,Math.PI),new THREE.MeshPhongMaterial({color:0xffaa44,emissive:0x221100}));r.rotation.x=Math.PI/2;r.rotation.z=(i/6)*Math.PI*2;r.position.set(0,i*0.08-0.2,0);piv.add(r);}
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(1.4,32,32),new THREE.MeshBasicMaterial({color:0xff9933,transparent:true,opacity:0.06,side:THREE.BackSide})));
+    const pts=makeParticles(120,5,0xffcc88);threeScene.add(pts);
+    let t=0;startLoop(()=>{t+=0.02;piv.rotation.y+=0.005;piv.rotation.x=Math.sin(t*0.5)*0.06;pts.rotation.y+=0.001;});
+}
+
+function buildLiver(c){
+    initThree(c);const piv=new THREE.Group();threeScene.userData.pivot=piv;threeScene.add(piv);
+    const mat=new THREE.MeshPhongMaterial({color:0x882222,emissive:0x2d0808,shininess:60});
+    const rg=new THREE.SphereGeometry(1.0,32,32);rg.scale(1.3,0.85,0.7);const rl=new THREE.Mesh(rg,mat);rl.position.set(-0.3,0,0);piv.add(rl);
+    const lg=new THREE.SphereGeometry(0.6,32,32);lg.scale(1.1,0.75,0.65);const ll=new THREE.Mesh(lg,mat);ll.position.set(0.95,0.15,0);piv.add(ll);
+    const gb=new THREE.Mesh(new THREE.SphereGeometry(0.25,16,16),new THREE.MeshPhongMaterial({color:0x88bb22,emissive:0x223300,shininess:80,transparent:true,opacity:0.9}));gb.position.set(0.2,-0.65,0.2);piv.add(gb);
+    const pv=new THREE.Mesh(new THREE.CylinderGeometry(0.08,0.08,1,16),new THREE.MeshPhongMaterial({color:0x4444cc,emissive:0x000022}));pv.position.set(-0.1,-0.7,0);pv.rotation.z=0.2;piv.add(pv);
+    [[0.2,0.4,0,0,0,0.3,0.6],[-0.3,0.35,0,0,0,-0.3,0.5],[0,0.5,0.2,0.2,0,0,0.5]].forEach(([x,y,z,rx,ry,rz,h])=>{const v=new THREE.Mesh(new THREE.CylinderGeometry(0.05,0.05,h,8),new THREE.MeshPhongMaterial({color:0x224488,emissive:0x000011}));v.position.set(x,y,z);v.rotation.set(rx,ry,rz);piv.add(v);});
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(1.6,32,32),new THREE.MeshBasicMaterial({color:0xaa2222,transparent:true,opacity:0.06,side:THREE.BackSide})));
+    const pts=makeParticles(120,5,0xff8888);threeScene.add(pts);
+    startLoop(()=>{piv.rotation.y+=0.005;pts.rotation.y+=0.001;});
+}
+
+function buildAtom(c){
+    initThree(c);threeCamera.position.set(0,0,5);const piv=new THREE.Group();threeScene.userData.pivot=piv;threeScene.add(piv);
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(0.35,32,32),new THREE.MeshPhongMaterial({color:0xff4400,emissive:0x330800,shininess:100})));
+    for(let i=0;i<8;i++){const a=(i/8)*Math.PI*2,b=new THREE.Mesh(new THREE.SphereGeometry(0.12,12,12),new THREE.MeshPhongMaterial({color:i%2===0?0xff6600:0x4488ff,emissive:0x111100}));b.position.set(Math.cos(a)*0.28,Math.sin(a)*0.28,(Math.random()-0.5)*0.2);piv.add(b);}
+    const orbs=[];[0x00e5ff,0xff4488,0x44ff88].forEach((col,i)=>{const og=new THREE.Group(),r=0.9+i*0.45;og.add(new THREE.Mesh(new THREE.TorusGeometry(r,0.02,8,64),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.4})));og.rotation.x=(i*Math.PI)/3;og.rotation.z=(i*Math.PI)/4;const el=new THREE.Mesh(new THREE.SphereGeometry(0.1,12,12),new THREE.MeshPhongMaterial({color:col,emissive:col,shininess:150}));el.userData={r,phase:i*(Math.PI*2/3)};og.add(el);piv.add(og);orbs.push({electron:el,r,speed:0.02-i*0.004});});
+    piv.add(new THREE.Mesh(new THREE.SphereGeometry(2,32,32),new THREE.MeshBasicMaterial({color:0x00e5ff,transparent:true,opacity:0.05,side:THREE.BackSide})));
+    const pts=makeParticles(200,7,0x00e5ff);threeScene.add(pts);
+    startLoop(()=>{piv.rotation.y+=0.004;orbs.forEach(o=>{o.electron.userData.phase+=o.speed;o.electron.position.set(Math.cos(o.electron.userData.phase)*o.r,0,Math.sin(o.electron.userData.phase)*o.r);});pts.rotation.y+=0.001;});
+}
+
+// ================================================================
+// MODEL MAP
+// ================================================================
+const modelMap=[
+    {keywords:['heart','cardiac','cardiovascular'],builder:buildHeart,label:'❤️ HEART'},
+    {keywords:['brain','cerebral','neuroscience','mind'],builder:buildBrain,label:'🧠 BRAIN'},
+    {keywords:['lung','lungs','respiratory','breath','pulmon'],builder:buildLungs,label:'🫁 LUNGS'},
+    {keywords:['kidney','renal','nephron'],builder:buildKidney,label:'🫘 KIDNEY'},
+    {keywords:['dna','gene','genetics','chromosome','helix'],builder:buildDNA,label:'🧬 DNA'},
+    {keywords:['neuron','nerve','synapse','neural','axon','dendrite'],builder:buildNeuron,label:'⚡ NEURON'},
+    {keywords:['eye','optic','retina','vision','cornea','pupil'],builder:buildEye,label:'👁️ EYE'},
+    {keywords:['stomach','digest','gastric'],builder:buildStomach,label:'🫄 STOMACH'},
+    {keywords:['liver','hepatic','bile'],builder:buildLiver,label:'🟤 LIVER'},
+    {keywords:['atom','molecule','electron','proton','chemistry','cell','wifi','electric','physics','solar','planet','space','water','light'],builder:buildAtom,label:'⚛️ MODEL'},
+];
+function detectModel(q){const ql=q.toLowerCase();for(const e of modelMap)if(e.keywords.some(k=>ql.includes(k)))return e;return null;}
+
+// ================================================================
+// FETCH EXPLANATION — calls our secure /api/explain proxy
+// ================================================================
+async function fetchExplanation(query){
+    try{
+        const res=await fetch('/api/explain',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            // Key is NEVER sent from the browser — the server holds it
+            body:JSON.stringify({query,isPro})
+        });
+        if(!res.ok) return '<span style="color:#ff4466;">⚠️ Server error. Please try again.</span>';
+        const data=await res.json();
+        return data.answer ? data.answer.replace(/\n/g,'<br>') : '<span style="color:#ff4466;">⚠️ No answer returned.</span>';
+    }catch(e){
+        return '<span style="color:#ff4466;">⚠️ Could not reach server. Are you running on Vercel?</span>';
+    }
+}
+
+// ================================================================
+// MAIN VISUALISE
+// ================================================================
+async function visualise(){
+    const query=document.getElementById('searchInput').value.trim();
+    if(!query)return;
+    const resultArea=document.getElementById('resultArea');
+    const flipCard=document.getElementById('flipCard');
+    const visualDiv=document.getElementById('visualContainer');
+    const aiDiv=document.getElementById('aiAnswer');
+    const ft=document.getElementById('flipToggle');
+    flipCard.classList.remove('flipped');
+    ft.innerHTML='🔄 FLIP — VIEW EXPLANATION';
+    resultArea.classList.add('visible');
+    destroyThree();
+    visualDiv.innerHTML=`<div class="loading-state"><div class="spinner"></div><span>BUILDING 3D MODEL...</span></div>`;
+    aiDiv.innerHTML=`<span style="color:#5a7a95;">Generating explanation...</span>`;
+    const match=detectModel(query);
+    if(match){
+        visualDiv.innerHTML='';
+        const badge=document.createElement('div');badge.className='model-label';badge.textContent=match.label;visualDiv.appendChild(badge);
+        const ctrl=document.createElement('div');ctrl.className='viewer-controls';ctrl.innerHTML=`<button class="layer-btn" id="resetViewBtn">⟳ Reset</button><button class="layer-btn" id="zoomInBtn">+ Zoom</button><button class="layer-btn" id="zoomOutBtn">− Zoom</button>`;visualDiv.appendChild(ctrl);
+        match.builder(visualDiv);
+        const hint=document.createElement('div');hint.style.cssText='position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-size:0.6rem;color:#5a7a95;font-family:Orbitron,sans-serif;letter-spacing:0.1em;pointer-events:none;';hint.textContent='DRAG TO ROTATE';visualDiv.appendChild(hint);
+        document.getElementById('resetViewBtn').onclick=()=>{if(threeScene&&threeScene.userData.pivot)threeScene.userData.pivot.rotation.set(0,0,0);};
+        document.getElementById('zoomInBtn').onclick=()=>{if(threeCamera)threeCamera.position.z=Math.max(1.5,threeCamera.position.z-0.5);};
+        document.getElementById('zoomOutBtn').onclick=()=>{if(threeCamera)threeCamera.position.z=Math.min(10,threeCamera.position.z+0.5);};
+    }else{
+        visualDiv.innerHTML=`<div class="no-visual-msg"><div style="font-size:2rem;">🔭</div><div>Try: <span>heart, brain, lungs, kidney, DNA, eye, neuron, stomach, liver, atom</span></div><div style="font-size:0.75rem;margin-top:4px;color:#3a5a75;">More models coming with Pro</div></div>`;
+    }
+    aiDiv.innerHTML=await fetchExplanation(query);
+}
+
+function lucky(){
+    const t=['How does the heart work?','Explain the human brain','How do lungs work?','What is DNA?','How do kidneys function?','What is a neuron?','How does the eye see?','How does the stomach work?','What does the liver do?','What is an atom?'];
+    document.getElementById('searchInput').value=t[Math.floor(Math.random()*t.length)];
+    visualise();
+}
+
+// ================================================================
+// FLIP + EVENTS
+// ================================================================
+document.getElementById('flipToggle').addEventListener('click',()=>{const fc=document.getElementById('flipCard');fc.classList.toggle('flipped');document.getElementById('flipToggle').innerHTML=fc.classList.contains('flipped')?'🔄 FLIP — VIEW 3D MODEL':'🔄 FLIP — VIEW EXPLANATION';});
+document.getElementById('visualiseBtn').addEventListener('click',visualise);
+document.getElementById('luckyBtn').addEventListener('click',lucky);
+document.getElementById('searchInput').addEventListener('keypress',e=>{if(e.key==='Enter')visualise();});
+
+// ================================================================
+// NOTIFY MODAL
+// ================================================================
+const nm=document.getElementById('notifyModal'),nei=document.getElementById('notifyEmail'),nsd=document.getElementById('notifySuccess'),nsb=document.getElementById('notifySubmit');
+document.getElementById('proNotifyBtn').onclick=()=>nm.classList.add('open');
+document.getElementById('notifyClose').onclick=()=>nm.classList.remove('open');
+nm.onclick=e=>{if(e.target===nm)nm.classList.remove('open');};
+nsb.onclick=()=>{const email=nei.value.trim();if(!email||!email.includes('@')){nei.focus();return;}nsd.style.display='block';nei.style.display='none';nsb.style.display='none';};
+</script>
+</body>
+</html>
